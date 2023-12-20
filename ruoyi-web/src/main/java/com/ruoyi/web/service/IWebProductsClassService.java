@@ -1,79 +1,81 @@
-package com.ruoyi.system.service;
+package com.ruoyi.web.service;
 
-import java.util.List;
 import com.ruoyi.common.core.domain.TreeSelect;
 import com.ruoyi.common.core.domain.entity.SysDept;
+import com.ruoyi.common.core.domain.entity.WebProductsClass;
+
+import java.util.List;
 
 /**
- * 部门管理 服务层
+ * 产品类管理 服务层
  * 
- * @author ruoyi
+ * @author fanpeichao
  */
-public interface ISysDeptService
+public interface IWebProductsClassService
 {
     /**
-     * 查询部门管理数据
+     * 查询产品类别数据
      * 
-     * @param dept 部门信息
-     * @return 部门信息集合
+     * @param productsClass 产品类别信息
+     * @return 产品类别集合
      */
-    public List<SysDept> selectDeptList(SysDept dept);
+    public List<WebProductsClass> selectWebProductsClassList(WebProductsClass productsClass);
 
     /**
-     * 查询部门树结构信息
+     * 查询产品类别树结构信息
      * 
-     * @param dept 部门信息
-     * @return 部门树信息集合
+     * @param productsClass 产品类别
+     * @return 产品类别树信息集合
      */
-    public List<TreeSelect> selectDeptTreeList(SysDept dept);
+    public List<TreeSelect> selectProductsClassTreeList(WebProductsClass productsClass);
 
     /**
      * 构建前端所需要树结构
      * 
-     * @param depts 部门列表
+     * @param productsClasses 产品类别列表
      * @return 树结构列表
      */
-    public List<SysDept> buildDeptTree(List<SysDept> depts);
+    public List<WebProductsClass> buildProductsClassTree(List<WebProductsClass> productsClasses);
 
     /**
      * 构建前端所需要下拉树结构
      * 
-     * @param depts 部门列表
+     * @param productsClasses 产品类别列表
      * @return 下拉树结构列表
      */
-    public List<TreeSelect> buildDeptTreeSelect(List<SysDept> depts);
+    public List<TreeSelect> buildProductsClassTreeSelect(List<WebProductsClass> productsClasses);
 
     /**
-     * 根据角色ID查询部门树信息
+     * 根据角色ID查询产品类别树信息
      * 
      * @param roleId 角色ID
-     * @return 选中部门列表
+     * @return 选中产品类别列表
      */
-    public List<Long> selectDeptListByRoleId(Long roleId);
+    public List<Long> selectProductsClassListByRoleId(Long roleId);
 
     /**
-     * 根据部门ID查询信息
+     * 根据产品类别ID查询信息
      * 
-     * @param deptId 部门ID
-     * @return 部门信息
+     * @param productClassId 产品类别ID
+     * @return 类别信息
      */
-    public SysDept selectDeptById(Long deptId);
+    public WebProductsClass selectProductClassById(Long productClassId);
 
     /**
-     * 根据ID查询所有子部门（正常状态）
+     * 根据ID查询所有子类别（正常状态）
      * 
-     * @param deptId 部门ID
-     * @return 子部门数
+     * @param productClassId 产品类别ID
+     * @return 子类别数
      */
-    public int selectNormalChildrenDeptById(Long deptId);
+    public int selectNormalChildrenProductClassById(Long productClassId);
 
     /**
-     * 是否存在部门子节点
+     * 是否存在类别子节点
      * 
-     * @param deptId 部门ID
+     * @param productClassId 类别ID
      * @return 结果
      */
-    public boolean hasChildByDeptId(Long deptId);
+    public boolean hasChildByProductClassId(Long productClassId);
 
     /**
      * 查询部门是否存在用户

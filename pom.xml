@@ -163,6 +163,13 @@
                 <version>${ruoyi.version}</version>
             </dependency>
 
+            <!-- 网站模块-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-web</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
             <!-- 通用工具-->
             <dependency>
                 <groupId>com.ruoyi</groupId>

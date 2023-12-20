@@ -8,6 +8,7 @@ import com.ruoyi.common.core.domain.entity.SysDept;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.service.ISysDeptService;
+import com.ruoyi.web.service.IWebProductsClassService;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,6 +28,7 @@ public class WebProductsClassController extends BaseController
 {
     @Autowired
     private ISysDeptService deptService;
+    // private IWebProductsClassService deptService;
 
     /**
      * 获取产品类别列表
