@@ -8,14 +8,13 @@ import java.util.List;
 
 /**
  * 产品类管理 服务层
- * 
+ *
  * @author fanpeichao
  */
-public interface IWebProductsClassService
-{
+public interface IWebProductsClassService {
     /**
      * 查询产品类别数据
-     * 
+     *
      * @param productsClass 产品类别信息
      * @return 产品类别集合
      */
@@ -23,7 +22,7 @@ public interface IWebProductsClassService
 
     /**
      * 查询产品类别树结构信息
-     * 
+     *
      * @param productsClass 产品类别
      * @return 产品类别树信息集合
      */
@@ -31,7 +30,7 @@ public interface IWebProductsClassService
 
     /**
      * 构建前端所需要树结构
-     * 
+     *
      * @param productsClasses 产品类别列表
      * @return 树结构列表
      */
@@ -39,7 +38,7 @@ public interface IWebProductsClassService
 
     /**
      * 构建前端所需要下拉树结构
-     * 
+     *
      * @param productsClasses 产品类别列表
      * @return 下拉树结构列表
      */
@@ -47,7 +46,7 @@ public interface IWebProductsClassService
 
     /**
      * 根据角色ID查询产品类别树信息
-     * 
+     *
      * @param roleId 角色ID
      * @return 选中产品类别列表
      */
@@ -55,7 +54,7 @@ public interface IWebProductsClassService
 
     /**
      * 根据产品类别ID查询信息
-     * 
+     *
      * @param productClassId 产品类别ID
      * @return 类别信息
      */
@@ -63,7 +62,7 @@ public interface IWebProductsClassService
 
     /**
      * 根据ID查询所有子类别（正常状态）
-     * 
+     *
      * @param productClassId 产品类别ID
      * @return 子类别数
      */
@@ -71,56 +70,56 @@ public interface IWebProductsClassService
 
     /**
      * 是否存在类别子节点
-     * 
+     *
      * @param productClassId 类别ID
      * @return 结果
      */
     public boolean hasChildByProductClassId(Long productClassId);
 
     /**
-     * 查询部门是否存在用户
-     * 
-     * @param deptId 部门ID
+     * 查询产品类别是否存在对应产品
+     *
+     * @param productClassId 产品类别ID
      * @return 结果 true 存在 false 不存在
      */
-    public boolean checkDeptExistUser(Long deptId);
+    public boolean checkProductsClassExistProduct(Long productClassId);
 
     /**
-     * 校验部门名称是否唯一
-     * 
-     * @param dept 部门信息
+     * 校验产品类别名称是否唯一
+     *
+     * @param productsClass 产品类别信息
      * @return 结果
      */
-    public boolean checkDeptNameUnique(SysDept dept);
+    public boolean checkProductsClassNameUnique(WebProductsClass productsClass);
 
     /**
-     * 校验部门是否有数据权限
-     * 
-     * @param deptId 部门id
+     * 校验产品类别是否有数据权限
+     *
+     * @param productClassId 产品类别id
      */
-    public void checkDeptDataScope(Long deptId);
+    public void checkProductsClassDataScope(Long productClassId);
 
     /**
-     * 新增保存部门信息
-     * 
-     * @param dept 部门信息
+     * 新增保存产品类别信息
+     *
+     * @param productsClass 产品类别信息
      * @return 结果
      */
-    public int insertDept(SysDept dept);
+    public int insertProductsClass(WebProductsClass productsClass);
 
     /**
-     * 修改保存部门信息
-     * 
-     * @param dept 部门信息
+     * 修改保存产品类别信息
+     *
+     * @param productsClass 产品类别信息
      * @return 结果
      */
-    public int updateDept(SysDept dept);
+    public int updateProductsClass(WebProductsClass productsClass);
 
     /**
-     * 删除部门管理信息
-     * 
-     * @param deptId 部门ID
+     * 删除产品类别信息
+     *
+     * @param productClassId 产品类别ID
      * @return 结果
      */
-    public int deleteDeptById(Long deptId);
+    public int deleteProductsClassById(Long productClassId);
 }

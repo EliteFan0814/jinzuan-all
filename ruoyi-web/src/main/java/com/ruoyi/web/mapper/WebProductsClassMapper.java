@@ -1,103 +1,104 @@
 package com.ruoyi.web.mapper;
 
 import com.ruoyi.common.core.domain.entity.SysDept;
+import com.ruoyi.common.core.domain.entity.WebProductsClass;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 /**
- * 部门管理 数据层
+ * 产品类别管理 数据层
  * 
  * @author ruoyi
  */
 public interface WebProductsClassMapper
 {
     /**
-     * 查询部门管理数据
+     * 查询产品类别管理数据
      * 
-     * @param dept 部门信息
-     * @return 部门信息集合
+     * @param productsClass 产品类别信息
+     * @return 产品类别信息集合
      */
-    public List<SysDept> selectDeptList(SysDept dept);
+    public List<WebProductsClass> selectWebProductsClassList(WebProductsClass productsClass);
 
     /**
-     * 根据角色ID查询部门树信息
+     * 根据角色ID查询产品类别树信息
      * 
      * @param roleId 角色ID
-     * @param deptCheckStrictly 部门树选择项是否关联显示
-     * @return 选中部门列表
+     * @param deptCheckStrictly 产品类别树选择项是否关联显示
+     * @return 选中产品类别列表
      */
     public List<Long> selectDeptListByRoleId(@Param("roleId") Long roleId, @Param("deptCheckStrictly") boolean deptCheckStrictly);
 
     /**
-     * 根据部门ID查询信息
+     * 根据产品类别ID查询信息
      * 
-     * @param deptId 部门ID
-     * @return 部门信息
+     * @param deptId 产品类别ID
+     * @return 产品类别信息
      */
-    public SysDept selectDeptById(Long deptId);
+    public WebProductsClass selectProductClassById(Long deptId);
 
     /**
-     * 根据ID查询所有子部门
+     * 根据ID查询所有子产品类别
      * 
-     * @param deptId 部门ID
-     * @return 部门列表
+     * @param deptId 产品类别ID
+     * @return 产品类别列表
      */
-    public List<SysDept> selectChildrenDeptById(Long deptId);
+    public List<WebProductsClass> selectChildrenProductClassById(Long deptId);
 
     /**
-     * 根据ID查询所有子部门（正常状态）
+     * 根据ID查询所有子产品类别（正常状态）
      * 
-     * @param deptId 部门ID
-     * @return 子部门数
+     * @param deptId 产品类别ID
+     * @return 子产品类别数
      */
-    public int selectNormalChildrenDeptById(Long deptId);
+    public int selectNormalChildrenProductClassById(Long deptId);
 
     /**
      * 是否存在子节点
      * 
-     * @param deptId 部门ID
+     * @param deptId 产品类别ID
      * @return 结果
      */
-    public int hasChildByDeptId(Long deptId);
+    public int hasChildByProductClassId(Long deptId);
 
     /**
-     * 查询部门是否存在用户
+     * 查询产品类别是否存在用户
      * 
-     * @param deptId 部门ID
+     * @param deptId 产品类别ID
      * @return 结果
      */
-    public int checkDeptExistUser(Long deptId);
+    public int checkProductsClassExistProduct(Long deptId);
 
     /**
-     * 校验部门名称是否唯一
+     * 校验产品类别名称是否唯一
      * 
-     * @param deptName 部门名称
-     * @param parentId 父部门ID
+     * @param deptName 产品类别名称
+     * @param parentId 父产品类别ID
      * @return 结果
      */
-    public SysDept checkDeptNameUnique(@Param("deptName") String deptName, @Param("parentId") Long parentId);
+    public WebProductsClass checkProductsClassNameUnique(@Param("productsClassName") String deptName, @Param("parentId") Long parentId);
 
     /**
-     * 新增部门信息
+     * 新增产品类别信息
      * 
-     * @param dept 部门信息
+     * @param dept 产品类别信息
      * @return 结果
      */
-    public int insertDept(SysDept dept);
+    public int insertProductsClass(WebProductsClass dept);
 
     /**
-     * 修改部门信息
+     * 修改产品类别信息
      * 
-     * @param dept 部门信息
+     * @param dept 产品类别信息
      * @return 结果
      */
-    public int updateDept(SysDept dept);
+    public int updateProductsClass(WebProductsClass dept);
 
     /**
-     * 修改所在部门正常状态
+     * 修改所在产品类别正常状态
      * 
-     * @param deptIds 部门ID组
+     * @param deptIds 产品类别ID组
      */
     public void updateDeptStatusNormal(Long[] deptIds);
 
@@ -107,13 +108,13 @@ public interface WebProductsClassMapper
      * @param depts 子元素
      * @return 结果
      */
-    public int updateDeptChildren(@Param("depts") List<SysDept> depts);
+    public int updateProductsClass(@Param("depts") List<WebProductsClass> depts);
 
     /**
-     * 删除部门管理信息
+     * 删除产品类别管理信息
      * 
-     * @param deptId 部门ID
+     * @param deptId 产品类别ID
      * @return 结果
      */
-    public int deleteDeptById(Long deptId);
+    public int deleteProductsClassById(Long deptId);
 }

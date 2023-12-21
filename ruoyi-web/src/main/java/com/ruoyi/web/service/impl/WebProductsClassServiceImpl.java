@@ -6,6 +6,7 @@ import com.ruoyi.common.core.domain.TreeSelect;
 import com.ruoyi.common.core.domain.entity.SysDept;
 import com.ruoyi.common.core.domain.entity.SysRole;
 import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.common.core.domain.entity.WebProductsClass;
 import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.SecurityUtils;
@@ -14,6 +15,8 @@ import com.ruoyi.common.utils.spring.SpringUtils;
 import com.ruoyi.system.mapper.SysDeptMapper;
 import com.ruoyi.system.mapper.SysRoleMapper;
 import com.ruoyi.system.service.ISysDeptService;
+import com.ruoyi.web.mapper.WebProductsClassMapper;
+import com.ruoyi.web.mapper.WebProductsClassRoleMapper;
 import com.ruoyi.web.service.IWebProductsClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,67 +27,60 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 部门管理 服务实现
- * 
+ * 产品类别 服务实现
+ *
  * @author ruoyi
  */
 @Service
-public class WebProductsClassServiceImpl implements IWebProductsClassService
-{
+public class WebProductsClassServiceImpl implements IWebProductsClassService {
     @Autowired
-    private SysDeptMapper deptMapper;
+    private WebProductsClassMapper productsClassMapper;
 
     @Autowired
-    private SysRoleMapper roleMapper;
+    private WebProductsClassRoleMapper productsClassRoleMapper;
 
     /**
-     * 查询部门管理数据
-     * 
-     * @param dept 部门信息
-     * @return 部门信息集合
+     * 查询产品类别数据
+     *
+     * @param productsClass 产品类别
+     * @return 产品类别集合
      */
     @Override
     @DataScope(deptAlias = "d")
-    public List<SysDept> selectDeptList(SysDept dept)
-    {
-        return deptMapper.selectDeptList(dept);
+    public List<WebProductsClass> selectWebProductsClassList(WebProductsClass productsClass) {
+        return productsClassMapper.selectWebProductsClassList(productsClass);
     }
 
     /**
-     * 查询部门树结构信息
-     * 
-     * @param dept 部门信息
-     * @return 部门树信息集合
+     * 查询产品类别树结构信息
+     *
+     * @param productsClass 产品类别
+     * @return 产品类别树信息集合
      */
     @Override
-    public List<TreeSelect> selectDeptTreeList(SysDept dept)
-    {
-        List<SysDept> depts = SpringUtils.getAopProxy(this).selectDeptList(dept);
-        return buildDeptTreeSelect(depts);
+    public List<TreeSelect> selectProductsClassTreeList(WebProductsClass productsClass) {
+        List<WebProductsClass> depts = SpringUtils.getAopProxy(this).selectWebProductsClassList(productsClass);
+        return buildProductsClassTreeSelect(depts);
     }
 
     /**
      * 构建前端所需要树结构
-     * 
-     * @param depts 部门列表
+     *
+     * @param depts 产品类别列表
      * @return 树结构列表
      */
     @Override
-    public List<SysDept> buildDeptTree(List<SysDept> depts)
-    {
-        List<SysDept> returnList = new ArrayList<SysDept>();
-        List<Long> tempList = depts.stream().map(SysDept::getDeptId).collect(Collectors.toList());
-        for (SysDept dept : depts)
-        {
+    public List<WebProductsClass> buildProductsClassTree(List<WebProductsClass> depts) {
+        List<WebProductsClass> returnList = new ArrayList<WebProductsClass>();
+        List<Long> tempList = depts.stream().map(WebProductsClass::getProductClassId).collect(Collectors.toList());
+        for (WebProductsClass dept : depts) {
             // 如果是顶级节点, 遍历该父节点的所有子节点
-            if (!tempList.contains(dept.getParentId()))
-            {
+            if (!tempList.contains(dept.getParentId())) {
                 recursionFn(depts, dept);
                 returnList.add(dept);
             }
         }
-        if (returnList.isEmpty())
-        {
+        if (returnList.isEmpty()) {
             returnList = depts;
         }
         return returnList;
@@ -92,221 +88,197 @@ public class WebProductsClassServiceImpl implements IWebProductsClassService
 
     /**
      * 构建前端所需要下拉树结构
-     * 
-     * @param depts 部门列表
+     *
+     * @param productsClasses 产品类别列表
      * @return 下拉树结构列表
      */
     @Override
-    public List<TreeSelect> buildDeptTreeSelect(List<SysDept> depts)
-    {
-        List<SysDept> deptTrees = buildDeptTree(depts);
+    public List<TreeSelect> buildProductsClassTreeSelect(List<WebProductsClass> productsClasses) {
+        List<WebProductsClass> deptTrees = buildProductsClassTree(productsClasses);
         return deptTrees.stream().map(TreeSelect::new).collect(Collectors.toList());
     }
 
     /**
-     * 根据角色ID查询部门树信息
-     * 
+     * 根据角色ID查询产品类别树信息
+     *
      * @param roleId 角色ID
-     * @return 选中部门列表
+     * @return 选中产品类别列表
      */
     @Override
-    public List<Long> selectDeptListByRoleId(Long roleId)
-    {
-        SysRole role = roleMapper.selectRoleById(roleId);
-        return deptMapper.selectDeptListByRoleId(roleId, role.isDeptCheckStrictly());
+    public List<Long> selectProductsClassListByRoleId(Long roleId) {
+        SysRole role = productsClassRoleMapper.selectRoleById(roleId);
+        return productsClassMapper.selectDeptListByRoleId(roleId, role.isDeptCheckStrictly());
     }
 
     /**
-     * 根据部门ID查询信息
-     * 
-     * @param deptId 部门ID
-     * @return 部门信息
+     * 根据产品类别ID查询信息
+     *
+     * @param deptId 产品类别ID
+     * @return 产品类别
      */
     @Override
-    public SysDept selectDeptById(Long deptId)
-    {
-        return deptMapper.selectDeptById(deptId);
+    public WebProductsClass selectProductClassById(Long deptId) {
+        return productsClassMapper.selectProductClassById(deptId);
     }
 
     /**
-     * 根据ID查询所有子部门（正常状态）
-     * 
-     * @param deptId 部门ID
-     * @return 子部门数
+     * 根据ID查询所有子产品类别（正常状态）
+     *
+     * @param deptId 产品类别ID
+     * @return 子产品类别数
      */
     @Override
-    public int selectNormalChildrenDeptById(Long deptId)
-    {
-        return deptMapper.selectNormalChildrenDeptById(deptId);
+    public int selectNormalChildrenProductClassById(Long deptId) {
+        return productsClassMapper.selectNormalChildrenProductClassById(deptId);
     }
 
     /**
      * 是否存在子节点
-     * 
-     * @param deptId 部门ID
+     *
+     * @param deptId 产品类别ID
      * @return 结果
      */
     @Override
-    public boolean hasChildByDeptId(Long deptId)
-    {
-        int result = deptMapper.hasChildByDeptId(deptId);
+    public boolean hasChildByProductClassId(Long deptId) {
+        int result = productsClassMapper.hasChildByProductClassId(deptId);
         return result > 0;
     }
 
     /**
-     * 查询部门是否存在用户
-     * 
-     * @param deptId 部门ID
+     * 查询产品类别是否存在对应产品
+     *
+     * @param deptId 产品类别ID
      * @return 结果 true 存在 false 不存在
      */
     @Override
-    public boolean checkDeptExistUser(Long deptId)
-    {
-        int result = deptMapper.checkDeptExistUser(deptId);
+    public boolean checkProductsClassExistProduct(Long deptId) {
+        int result = productsClassMapper.checkProductsClassExistProduct(deptId);
         return result > 0;
     }
 
     /**
-     * 校验部门名称是否唯一
-     * 
-     * @param dept 部门信息
+     * 校验产品类别名称是否唯一
+     *
+     * @param dept 产品类别
      * @return 结果
      */
     @Override
-    public boolean checkDeptNameUnique(SysDept dept)
-    {
-        Long deptId = StringUtils.isNull(dept.getDeptId()) ? -1L : dept.getDeptId();
-        SysDept info = deptMapper.checkDeptNameUnique(dept.getDeptName(), dept.getParentId());
-        if (StringUtils.isNotNull(info) && info.getDeptId().longValue() != deptId.longValue())
-        {
+    public boolean checkProductsClassNameUnique(WebProductsClass dept) {
+        Long deptId = StringUtils.isNull(dept.getProductClassId()) ? -1L : dept.getProductClassId();
+        WebProductsClass info = productsClassMapper.checkProductsClassNameUnique(dept.getProductClassName(), dept.getParentId());
+        if (StringUtils.isNotNull(info) && info.getProductClassId().longValue() != deptId.longValue()) {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;
     }
 
     /**
-     * 校验部门是否有数据权限
-     * 
-     * @param deptId 部门id
+     * 校验产品类别是否有数据权限
+     *
+     * @param deptId 产品类别id
      */
     @Override
-    public void checkDeptDataScope(Long deptId)
-    {
-        if (!SysUser.isAdmin(SecurityUtils.getUserId()))
-        {
-            SysDept dept = new SysDept();
-            dept.setDeptId(deptId);
-            List<SysDept> depts = SpringUtils.getAopProxy(this).selectDeptList(dept);
-            if (StringUtils.isEmpty(depts))
-            {
-                throw new ServiceException("没有权限访问部门数据！");
+    public void checkProductsClassDataScope(Long deptId) {
+        if (!SysUser.isAdmin(SecurityUtils.getUserId())) {
+            WebProductsClass dept = new WebProductsClass();
+            dept.setProductClassId(deptId);
+            List<WebProductsClass> depts = SpringUtils.getAopProxy(this).selectWebProductsClassList(dept);
+            if (StringUtils.isEmpty(depts)) {
+                throw new ServiceException("没有权限访问产品类别数据！");
             }
         }
     }
 
     /**
-     * 新增保存部门信息
-     * 
-     * @param dept 部门信息
+     * 新增保存产品类别
+     *
+     * @param dept 产品类别
      * @return 结果
      */
     @Override
-    public int insertDept(SysDept dept)
-    {
-        SysDept info = deptMapper.selectDeptById(dept.getParentId());
+    public int insertProductsClass(WebProductsClass dept) {
+        WebProductsClass info = productsClassMapper.selectProductClassById(dept.getParentId());
         // 如果父节点不为正常状态,则不允许新增子节点
-        if (!UserConstants.DEPT_NORMAL.equals(info.getStatus()))
-        {
-            throw new ServiceException("部门停用，不允许新增");
+        if (!UserConstants.DEPT_NORMAL.equals(info.getStatus())) {
+            throw new ServiceException("产品类别停用，不允许新增");
         }
         dept.setAncestors(info.getAncestors() + "," + dept.getParentId());
-        return deptMapper.insertDept(dept);
+        return productsClassMapper.insertProductsClass(dept);
     }
 
     /**
-     * 修改保存部门信息
-     * 
-     * @param dept 部门信息
+     * 修改保存产品类别
+     *
+     * @param dept 产品类别
      * @return 结果
      */
     @Override
-    public int updateDept(SysDept dept)
-    {
-        SysDept newParentDept = deptMapper.selectDeptById(dept.getParentId());
-        SysDept oldDept = deptMapper.selectDeptById(dept.getDeptId());
-        if (StringUtils.isNotNull(newParentDept) && StringUtils.isNotNull(oldDept))
-        {
-            String newAncestors = newParentDept.getAncestors() + "," + newParentDept.getDeptId();
+    public int updateProductsClass(WebProductsClass dept) {
+        WebProductsClass newParentDept = productsClassMapper.selectProductClassById(dept.getParentId());
+        WebProductsClass oldDept = productsClassMapper.selectProductClassById(dept.getProductClassId());
+        if (StringUtils.isNotNull(newParentDept) && StringUtils.isNotNull(oldDept)) {
+            String newAncestors = newParentDept.getAncestors() + "," + newParentDept.getProductClassId();
             String oldAncestors = oldDept.getAncestors();
             dept.setAncestors(newAncestors);
-            updateDeptChildren(dept.getDeptId(), newAncestors, oldAncestors);
+            updateDeptChildren(dept.getProductClassId(), newAncestors, oldAncestors);
         }
-        int result = deptMapper.updateDept(dept);
+        int result = productsClassMapper.updateProductsClass(dept);
         if (UserConstants.DEPT_NORMAL.equals(dept.getStatus()) && StringUtils.isNotEmpty(dept.getAncestors())
-                && !StringUtils.equals("0", dept.getAncestors()))
-        {
-            // 如果该部门是启用状态，则启用该部门的所有上级部门
+                && !StringUtils.equals("0", dept.getAncestors())) {
+            // 如果该产品类别是启用状态，则启用该产品类别的所有上级产品类别
             updateParentDeptStatusNormal(dept);
         }
         return result;
     }
 
     /**
-     * 修改该部门的父级部门状态
-     * 
-     * @param dept 当前部门
+     * 修改该产品类别的父级产品类别状态
+     *
+     * @param dept 当前产品类别
      */
-    private void updateParentDeptStatusNormal(SysDept dept)
-    {
+    private void updateParentDeptStatusNormal(WebProductsClass dept) {
         String ancestors = dept.getAncestors();
         Long[] deptIds = Convert.toLongArray(ancestors);
-        deptMapper.updateDeptStatusNormal(deptIds);
+        productsClassMapper.updateDeptStatusNormal(deptIds);
     }
 
     /**
      * 修改子元素关系
-     * 
-     * @param deptId 被修改的部门ID
+     *
+     * @param deptId       被修改的产品类别ID
      * @param newAncestors 新的父ID集合
      * @param oldAncestors 旧的父ID集合
      */
-    public void updateDeptChildren(Long deptId, String newAncestors, String oldAncestors)
-    {
-        List<SysDept> children = deptMapper.selectChildrenDeptById(deptId);
-        for (SysDept child : children)
-        {
+    public void updateDeptChildren(Long deptId, String newAncestors, String oldAncestors) {
+        List<WebProductsClass> children = productsClassMapper.selectChildrenProductClassById(deptId);
+        for (WebProductsClass child : children) {
             child.setAncestors(child.getAncestors().replaceFirst(oldAncestors, newAncestors));
         }
-        if (children.size() > 0)
-        {
-            deptMapper.updateDeptChildren(children);
+        if (children.size() > 0) {
+            productsClassMapper.updateProductsClass(children);
         }
     }
 
     /**
-     * 删除部门管理信息
-     * 
-     * @param deptId 部门ID
+     * 删除产品类别信息
+     *
+     * @param deptId 产品类别ID
      * @return 结果
      */
     @Override
-    public int deleteDeptById(Long deptId)
-    {
-        return deptMapper.deleteDeptById(deptId);
+    public int deleteProductsClassById(Long deptId) {
+        return productsClassMapper.deleteProductsClassById(deptId);
     }
 
     /**
      * 递归列表
      */
-    private void recursionFn(List<SysDept> list, SysDept t)
-    {
+    private void recursionFn(List<WebProductsClass> list, WebProductsClass t) {
         // 得到子节点列表
-        List<SysDept> childList = getChildList(list, t);
+        List<WebProductsClass> childList = getChildList(list, t);
         t.setChildren(childList);
-        for (SysDept tChild : childList)
-        {
-            if (hasChild(list, tChild))
-            {
+        for (WebProductsClass tChild : childList) {
+            if (hasChild(list, tChild)) {
                 recursionFn(list, tChild);
             }
         }
@@ -315,15 +287,12 @@ public class WebProductsClassServiceImpl implements IWebProductsClassService
     /**
      * 得到子节点列表
      */
-    private List<SysDept> getChildList(List<SysDept> list, SysDept t)
-    {
-        List<SysDept> tlist = new ArrayList<SysDept>();
-        Iterator<SysDept> it = list.iterator();
-        while (it.hasNext())
-        {
-            SysDept n = (SysDept) it.next();
-            if (StringUtils.isNotNull(n.getParentId()) && n.getParentId().longValue() == t.getDeptId().longValue())
-            {
+    private List<WebProductsClass> getChildList(List<WebProductsClass> list, WebProductsClass t) {
+        List<WebProductsClass> tlist = new ArrayList<WebProductsClass>();
+        Iterator<WebProductsClass> it = list.iterator();
+        while (it.hasNext()) {
+            WebProductsClass n = (WebProductsClass) it.next();
+            if (StringUtils.isNotNull(n.getParentId()) && n.getParentId().longValue() == t.getProductClassId().longValue()) {
                 tlist.add(n);
             }
         }
@@ -333,8 +302,7 @@ public class WebProductsClassServiceImpl implements IWebProductsClassService
     /**
      * 判断是否有子节点
      */
-    private boolean hasChild(List<SysDept> list, SysDept t)
-    {
+    private boolean hasChild(List<WebProductsClass> list, WebProductsClass t) {
         return getChildList(list, t).size() > 0;
     }
 }
