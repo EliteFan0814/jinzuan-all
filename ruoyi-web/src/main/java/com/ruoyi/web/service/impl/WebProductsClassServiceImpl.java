@@ -165,7 +165,8 @@ public class WebProductsClassServiceImpl implements IWebProductsClassService {
     @Override
     public boolean checkProductsClassNameUnique(WebProductsClass dept) {
         Long deptId = StringUtils.isNull(dept.getProductClassId()) ? -1L : dept.getProductClassId();
-        WebProductsClass info = productsClassMapper.checkProductsClassNameUnique(dept.getProductClassName(), dept.getParentId());
+        WebProductsClass info = productsClassMapper.checkProductsClassNameUnique(dept.getProductClassName(),
+                dept.getParentId());
         if (StringUtils.isNotNull(info) && info.getProductClassId().longValue() != deptId.longValue()) {
             return UserConstants.NOT_UNIQUE;
         }

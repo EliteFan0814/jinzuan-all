@@ -1,16 +1,16 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch">
-      <el-form-item label="部门名称" prop="deptName">
+      <el-form-item label="类别名称" prop="productClassName">
         <el-input
-          v-model="queryParams.deptName"
-          placeholder="请输入部门名称"
+          v-model="queryParams.productClassName"
+          placeholder="请输入类别名称"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item label="状态" prop="status">
-        <el-select v-model="queryParams.status" placeholder="部门状态" clearable>
+        <el-select v-model="queryParams.status" placeholder="类别状态" clearable>
           <el-option
             v-for="dict in dict.type.sys_normal_disable"
             :key="dict.value"
@@ -52,11 +52,11 @@
       v-if="refreshTable"
       v-loading="loading"
       :data="deptList"
-      row-key="deptId"
+      row-key="productClassId"
       :default-expand-all="isExpandAll"
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
-      <el-table-column prop="deptName" label="部门名称" width="260"></el-table-column>
+      <el-table-column prop="productClassName" label="类别名称" width="260"></el-table-column>
       <el-table-column prop="orderNum" label="排序" width="200"></el-table-column>
       <el-table-column prop="status" label="状态" width="100">
         <template slot-scope="scope">
@@ -108,8 +108,8 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="部门名称" prop="deptName">
-              <el-input v-model="form.deptName" placeholder="请输入部门名称" />
+            <el-form-item label="类别名称" prop="productClassName">
+              <el-input v-model="form.productClassName" placeholder="请输入类别名称" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -137,7 +137,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="部门状态">
+            <el-form-item label="类别状态">
               <el-radio-group v-model="form.status">
                 <el-radio
                   v-for="dict in dict.type.sys_normal_disable"
@@ -158,7 +158,7 @@
 </template>
 
 <script>
-import { listDept, getDept, delDept, addDept, updateDept, listDeptExcludeChild } from "@/api/system/dept";
+import { listDept, getDept, delDept, addDept, updateDept, listDeptExcludeChild } from "@/api/system/web";
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 
@@ -186,7 +186,7 @@ export default {
       refreshTable: true,
       // 查询参数
       queryParams: {
-        deptName: undefined,
+        productClassName: undefined,
         status: undefined
       },
       // 表单参数
@@ -196,8 +196,8 @@ export default {
         parentId: [
           { required: true, message: "上级部门不能为空", trigger: "blur" }
         ],
-        deptName: [
-          { required: true, message: "部门名称不能为空", trigger: "blur" }
+        productClassName: [
+          { required: true, message: "类别名称不能为空", trigger: "blur" }
         ],
         orderNum: [
           { required: true, message: "显示排序不能为空", trigger: "blur" }
@@ -227,7 +227,7 @@ export default {
     getList() {
       this.loading = true;
       listDept(this.queryParams).then(response => {
-        this.deptList = this.handleTree(response.data, "deptId");
+        this.deptList = this.handleTree(response.data, "productClassId");
         this.loading = false;
       });
     },
@@ -237,8 +237,8 @@ export default {
         delete node.children;
       }
       return {
-        id: node.deptId,
-        label: node.deptName,
+        id: node.productClassId,
+        label: node.productClassName,
         children: node.children
       };
     },
@@ -250,9 +250,9 @@ export default {
     // 表单重置
     reset() {
       this.form = {
-        deptId: undefined,
+        productClassId: undefined,
         parentId: undefined,
-        deptName: undefined,
+        productClassName: undefined,
         orderNum: undefined,
         leader: undefined,
         phone: undefined,
@@ -274,12 +274,12 @@ export default {
     handleAdd(row) {
       this.reset();
       if (row != undefined) {
-        this.form.parentId = row.deptId;
+        this.form.parentId = row.productClassId;
       }
       this.open = true;
       this.title = "添加部门";
       listDept().then(response => {
-        this.deptOptions = this.handleTree(response.data, "deptId");
+        this.deptOptions = this.handleTree(response.data, "productClassId");
       });
     },
     /** 展开/折叠操作 */
@@ -293,14 +293,14 @@ export default {
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      getDept(row.deptId).then(response => {
+      getDept(row.productClassId).then(response => {
         this.form = response.data;
         this.open = true;
         this.title = "修改部门";
-        listDeptExcludeChild(row.deptId).then(response => {
-          this.deptOptions = this.handleTree(response.data, "deptId");
+        listDeptExcludeChild(row.productClassId).then(response => {
+          this.deptOptions = this.handleTree(response.data, "productClassId");
           if (this.deptOptions.length == 0) {
-            const noResultsOptions = { deptId: this.form.parentId, deptName: this.form.parentName, children: [] };
+            const noResultsOptions = { productClassId: this.form.parentId, productClassName: this.form.parentName, children: [] };
             this.deptOptions.push(noResultsOptions);
           }
         });
@@ -310,7 +310,7 @@ export default {
     submitForm: function() {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          if (this.form.deptId != undefined) {
+          if (this.form.productClassId != undefined) {
             updateDept(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
@@ -328,8 +328,8 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      this.$modal.confirm('是否确认删除名称为"' + row.deptName + '"的数据项？').then(function() {
-        return delDept(row.deptId);
+      this.$modal.confirm('是否确认删除名称为"' + row.productClassName + '"的数据项？').then(function() {
+        return delDept(row.productClassId);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");

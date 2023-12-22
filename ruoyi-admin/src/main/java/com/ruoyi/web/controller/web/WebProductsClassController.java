@@ -4,10 +4,9 @@ import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.core.domain.entity.SysDept;
+import com.ruoyi.common.core.domain.entity.WebProductsClass;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.StringUtils;
-import com.ruoyi.system.service.ISysDeptService;
 import com.ruoyi.web.service.IWebProductsClassService;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,110 +18,95 @@ import java.util.List;
 
 /**
  * 产品类别信息
- * 
+ *
  * @author fanpeichao
  */
 @RestController
 @RequestMapping("/web/productsClass")
-public class WebProductsClassController extends BaseController
-{
+public class WebProductsClassController extends BaseController {
     @Autowired
-    private ISysDeptService deptService;
-    // private IWebProductsClassService deptService;
+    private IWebProductsClassService productsClassService;
 
     /**
      * 获取产品类别列表
      */
     @PreAuthorize("@ss.hasPermi('web:productsClass:list')")
     @GetMapping("/list")
-    public AjaxResult list(SysDept dept)
-    {
-        List<SysDept> depts = deptService.selectDeptList(dept);
-        return success(depts);
+    public AjaxResult list(WebProductsClass productsClass) {
+        List<WebProductsClass> productsClasses = productsClassService.selectWebProductsClassList(productsClass);
+        return success(productsClasses);
     }
 
     /**
-     * 查询部门列表（排除节点）
+     * 查询产品分类列表（排除节点）
      */
-    @PreAuthorize("@ss.hasPermi('system:dept:list')")
-    @GetMapping("/list/exclude/{deptId}")
-    public AjaxResult excludeChild(@PathVariable(value = "deptId", required = false) Long deptId)
-    {
-        List<SysDept> depts = deptService.selectDeptList(new SysDept());
-        depts.removeIf(d -> d.getDeptId().intValue() == deptId || ArrayUtils.contains(StringUtils.split(d.getAncestors(), ","), deptId + ""));
-        return success(depts);
+    @PreAuthorize("@ss.hasPermi('web:productsClass:list')")
+    @GetMapping("/list/exclude/{productsClassId}")
+    public AjaxResult excludeChild(@PathVariable(value = "productsClassId", required = false) Long productsClassId) {
+        List<WebProductsClass> productsClasses =
+                productsClassService.selectWebProductsClassList(new WebProductsClass());
+        productsClasses.removeIf(d -> d.getProductClassId().intValue() == productsClassId || ArrayUtils.contains(StringUtils.split(d.getAncestors(), ","), productsClassId + ""));
+        return success(productsClasses);
     }
 
     /**
-     * 根据部门编号获取详细信息
+     * 根据产品分类编号获取详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:dept:query')")
-    @GetMapping(value = "/{deptId}")
-    public AjaxResult getInfo(@PathVariable Long deptId)
-    {
-        deptService.checkDeptDataScope(deptId);
-        return success(deptService.selectDeptById(deptId));
+    @PreAuthorize("@ss.hasPermi('web:productsClass:query')")
+    @GetMapping(value = "/{productsClassId}")
+    public AjaxResult getInfo(@PathVariable Long productsClassId) {
+        productsClassService.checkProductsClassDataScope(productsClassId);
+        return success(productsClassService.selectProductClassById(productsClassId));
     }
 
     /**
-     * 新增部门
+     * 新增产品分类
      */
-    @PreAuthorize("@ss.hasPermi('system:dept:add')")
-    @Log(title = "部门管理", businessType = BusinessType.INSERT)
+    @PreAuthorize("@ss.hasPermi('web:productsClass:add')")
+    @Log(title = "产品分类管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@Validated @RequestBody SysDept dept)
-    {
-        if (!deptService.checkDeptNameUnique(dept))
-        {
-            return error("新增部门'" + dept.getDeptName() + "'失败，部门名称已存在");
+    public AjaxResult add(@Validated @RequestBody WebProductsClass productsClass) {
+        if (!productsClassService.checkProductsClassNameUnique(productsClass)) {
+            return error("新增产品分类'" + productsClass.getProductClassName() + "'失败，产品分类名称已存在");
         }
-        dept.setCreateBy(getUsername());
-        return toAjax(deptService.insertDept(dept));
+        productsClass.setCreateBy(getUsername());
+        return toAjax(productsClassService.insertProductsClass(productsClass));
     }
 
     /**
-     * 修改部门
+     * 修改产品分类
      */
-    @PreAuthorize("@ss.hasPermi('system:dept:edit')")
-    @Log(title = "部门管理", businessType = BusinessType.UPDATE)
+    @PreAuthorize("@ss.hasPermi('web:productsClass:edit')")
+    @Log(title = "产品分类管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@Validated @RequestBody SysDept dept)
-    {
-        Long deptId = dept.getDeptId();
-        deptService.checkDeptDataScope(deptId);
-        if (!deptService.checkDeptNameUnique(dept))
-        {
-            return error("修改部门'" + dept.getDeptName() + "'失败，部门名称已存在");
+    public AjaxResult edit(@Validated @RequestBody WebProductsClass productsClass) {
+        Long productsClassId = productsClass.getProductClassId();
+        productsClassService.checkProductsClassDataScope(productsClassId);
+        if (!productsClassService.checkProductsClassNameUnique(productsClass)) {
+            return error("修改产品分类'" + productsClass.getProductClassName() + "'失败，产品分类名称已存在");
+        } else if (productsClass.getParentId().equals(productsClassId)) {
+            return error("修改产品分类'" + productsClass.getProductClassName() + "'失败，上级产品分类不能是自己");
+        } else if (StringUtils.equals(UserConstants.DEPT_DISABLE, productsClass.getStatus()) && productsClassService.selectNormalChildrenProductClassById(productsClassId) > 0) {
+            return error("该产品分类包含未停用的子产品分类！");
         }
-        else if (dept.getParentId().equals(deptId))
-        {
-            return error("修改部门'" + dept.getDeptName() + "'失败，上级部门不能是自己");
-        }
-        else if (StringUtils.equals(UserConstants.DEPT_DISABLE, dept.getStatus()) && deptService.selectNormalChildrenDeptById(deptId) > 0)
-        {
-            return error("该部门包含未停用的子部门！");
-        }
-        dept.setUpdateBy(getUsername());
-        return toAjax(deptService.updateDept(dept));
+        productsClass.setUpdateBy(getUsername());
+        return toAjax(productsClassService.updateProductsClass(productsClass));
     }
 
     /**
-     * 删除部门
+     * 删除产品分类
      */
-    @PreAuthorize("@ss.hasPermi('system:dept:remove')")
-    @Log(title = "部门管理", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{deptId}")
-    public AjaxResult remove(@PathVariable Long deptId)
-    {
-        if (deptService.hasChildByDeptId(deptId))
-        {
-            return warn("存在下级部门,不允许删除");
+    @PreAuthorize("@ss.hasPermi('web:productsClass:remove')")
+    @Log(title = "产品分类管理", businessType = BusinessType.DELETE)
+    @DeleteMapping("/{productsClassId}")
+    public AjaxResult remove(@PathVariable Long productsClassId) {
+        if (productsClassService.hasChildByProductClassId(productsClassId)) {
+            return warn("存在下级产品分类,不允许删除");
         }
-        if (deptService.checkDeptExistUser(deptId))
-        {
-            return warn("部门存在用户,不允许删除");
+        if (productsClassService.checkProductsClassExistProduct(productsClassId)) {
+            return warn("产品分类存在用户,不允许删除");
         }
-        deptService.checkDeptDataScope(deptId);
-        return toAjax(deptService.deleteDeptById(deptId));
+        productsClassService.checkProductsClassDataScope(productsClassId);
+        return toAjax(productsClassService.deleteProductsClassById(productsClassId));
     }
 }

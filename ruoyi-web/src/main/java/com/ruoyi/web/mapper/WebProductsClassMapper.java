@@ -22,7 +22,7 @@ public interface WebProductsClassMapper
     public List<WebProductsClass> selectWebProductsClassList(WebProductsClass productsClass);
 
     /**
-     * 根据角色ID查询产品类别树信息
+     * 根据角色ID查询产品类别树信息[暂时不用]
      * 
      * @param roleId 角色ID
      * @param deptCheckStrictly 产品类别树选择项是否关联显示
@@ -63,7 +63,7 @@ public interface WebProductsClassMapper
     public int hasChildByProductClassId(Long deptId);
 
     /**
-     * 查询产品类别是否存在用户
+     * 查询产品类别是否存在产品
      * 
      * @param deptId 产品类别ID
      * @return 结果

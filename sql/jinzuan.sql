@@ -18,7 +18,7 @@ create table web_products_class (
                           create_time 	                     datetime                                   comment '创建时间',
                           update_by                          varchar(64)     default ''                 comment '更新者',
                           update_time                        datetime                                   comment '更新时间',
-                          primary key (dept_id)
+                          primary key (product_class_id)
 ) engine=innodb auto_increment=200 comment = '产品分类表';
 
 -- ----------------------------
@@ -29,3 +29,29 @@ insert into web_products_class values(101,  100, '0,100',      '金属结合剂'
 insert into web_products_class values(102,  100, '0,100',      '树脂结合剂',  'products',  2, '叶培举', '15888888888', 'y@qq.com', '0', '0', 'admin', sysdate(), '', null);
 insert into web_products_class values(103,  100, '0,100',      '电镀',       'products',  3, '叶培举', '15888888888', 'y@qq.com', '0', '0', 'admin', sysdate(), '', null);
 insert into web_products_class values(104,  100, '0,100',      '陶瓷结合剂',  'products',  4, '叶培举', '15888888888', 'y@qq.com', '0', '0', 'admin', sysdate(), '', null);
+
+-- ----------------------------
+-- 2、产品表
+-- ----------------------------
+drop table if exists web_product;
+create table web_product (
+                          product_id        bigint(20)      not null auto_increment    comment '产品ID',
+                          class_id          bigint(20)      default null               comment '产品类别ID',
+                          product_name      varchar(50)     not null                   comment '产品名称',
+                          product_name_en   varchar(100)    default ''                 comment '产品名称英文',
+                          avatar            varchar(100)    default ''                 comment '图片地址',
+                          status            char(1)         default '0'                comment '产品状态（0正常 1停用）',
+                          del_flag          char(1)         default '0'                comment '删除标志（0代表存在 2代表删除）',
+                          create_by         varchar(64)     default ''                 comment '创建者',
+                          create_time       datetime                                   comment '创建时间',
+                          update_by         varchar(64)     default ''                 comment '更新者',
+                          update_time       datetime                                   comment '更新时间',
+                          remark            varchar(500)    default null               comment '备注',
+                          content           longblob        default null               comment '产品介绍富文本',
+                          primary key (product_id)
+) engine=innodb auto_increment=100 comment = '产品表';
+
+-- ----------------------------
+-- 初始化-产品表数据
+-- ----------------------------
+insert into web_product values(1,  101, '金属结合剂产品A', 'JinShuA', '', '0', '0', '叶培举', sysdate(), '叶培举', sysdate(), '', '这是金属结合剂产品A介绍');
