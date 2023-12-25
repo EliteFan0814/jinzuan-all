@@ -65,7 +65,7 @@ public class WebProductsClass extends BaseEntity {
     private String email;
 
     /**
-     * 部门状态:0正常,1停用
+     * 产品分类状态:0正常,1停用
      */
     private String status;
 

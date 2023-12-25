@@ -50,7 +50,10 @@
             AND parent_id = #{parentId}
         </if>
         <if test="productClassName != null and productClassName != ''">
-            AND dept_name like concat('%', #{productClassName}, '%')
+            AND product_class_name like concat('%', #{productClassName}, '%')
+        </if>
+        <if test="productClassNameEn != null and productClassNameEn != ''">
+            AND product_class_name_en like concat('%', #{productClassNameEn}, '%')
         </if>
         <if test="status != null and status != ''">
             AND status = #{status}
@@ -60,7 +63,7 @@
         order by d.parent_id, d.order_num
     </select>
 
-    <select id="selectDeptListByRoleId" resultType="Long">
+    <select id="selectProductsClassListByRoleId" resultType="Long">
         select d.product_class_id
         from web_products_class d
         left join sys_role_dept rd on d.product_class_id = rd.product_class_id
@@ -72,11 +75,12 @@
         order by d.parent_id, d.order_num
     </select>
 
-    <select id="selectDeptById" parameterType="Long" resultMap="WebProductsClassResult">
+    <select id="selectProductClassById" parameterType="Long" resultMap="WebProductsClassResult">
         select d.product_class_id,
                d.parent_id,
                d.ancestors,
                d.product_class_name,
+               d.product_class_name_en,
                d.order_num,
                d.leader,
                d.phone,
@@ -94,7 +98,7 @@
           and del_flag = '0'
     </select>
 
-    <select id="hasChildByDeptId" parameterType="Long" resultType="int">
+    <select id="hasChildByProductClassId" parameterType="Long" resultType="int">
         select count(1)
         from web_products_class
         where del_flag = '0'
@@ -102,13 +106,13 @@
         limit 1
     </select>
 
-    <select id="selectChildrenDeptById" parameterType="Long" resultMap="WebProductsClassResult">
+    <select id="selectChildrenProductClassById" parameterType="Long" resultMap="WebProductsClassResult">
         select *
         from web_products_class
         where find_in_set(#{productClassId}, ancestors)
     </select>
 
-    <select id="selectNormalChildrenDeptById" parameterType="Long" resultType="int">
+    <select id="selectNormalChildrenProductClassById" parameterType="Long" resultType="int">
         select count(*)
         from web_products_class
         where status = 0
@@ -116,16 +120,17 @@
           and find_in_set(#{productClassId}, ancestors)
     </select>
 
-    <select id="checkDeptNameUnique" resultMap="WebProductsClassResult">
+    <select id="checkProductsClassNameUnique" resultMap="WebProductsClassResult">
         <include refid="selectWebProductsClassVo"/>
-        where dept_name=#{productClassName} and parent_id = #{parentId} and del_flag = '0' limit 1
+        where product_class_name=#{productClassName} and parent_id = #{parentId} and del_flag = '0' limit 1
     </select>
 
-    <insert id="insertDept" parameterType="WebProductsClass">
+    <insert id="insertProductsClass" parameterType="WebProductsClass">
         insert into web_products_class(
         <if test="productClassId != null and productClassId != 0">product_class_id,</if>
         <if test="parentId != null and parentId != 0">parent_id,</if>
         <if test="productClassName != null and productClassName != ''">product_class_name,</if>
+        <if test="productClassNameEn != null and productClassNameEn != ''">product_class_name_en,</if>
         <if test="ancestors != null and ancestors != ''">ancestors,</if>
         <if test="orderNum != null">order_num,</if>
         <if test="leader != null and leader != ''">leader,</if>
@@ -149,11 +154,12 @@
         )
     </insert>
 
-    <update id="updateDept" parameterType="WebProductsClass">
+    <update id="updateProductsClass" parameterType="WebProductsClass">
         update web_products_class
         <set>
             <if test="parentId != null and parentId != 0">parent_id = #{parentId},</if>
-            <if test="productClassName != null and productClassName != ''">dept_name = #{productClassName},</if>
+            <if test="productClassName != null and productClassName != ''">product_class_name = #{productClassName},</if>
+            <if test="productClassNameEn != null and productClassNameEn != ''">product_class_name_en = #{productClassNameEn},</if>
             <if test="ancestors != null and ancestors != ''">ancestors = #{ancestors},</if>
             <if test="orderNum != null">order_num = #{orderNum},</if>
             <if test="leader != null">leader = #{leader},</if>
@@ -166,7 +172,7 @@
         where product_class_id = #{productClassId}
     </update>
 
-    <update id="updateDeptChildren" parameterType="java.util.List">
+    <update id="updateProductClassChildren" parameterType="java.util.List">
         update web_products_class set ancestors =
         <foreach collection="depts" item="item" index="index"
                  separator=" " open="case product_class_id" close="end">
@@ -179,14 +185,14 @@
         </foreach>
     </update>
 
-    <update id="updateDeptStatusNormal" parameterType="Long">
+    <update id="updateProductsClassStatusNormal" parameterType="Long">
         update web_products_class set status = '0' where product_class_id in
         <foreach collection="array" item="productClassId" open="(" separator="," close=")">
             #{productClassId}
         </foreach>
     </update>
 
-    <delete id="deleteDeptById" parameterType="Long">
+    <delete id="deleteProductsClassById" parameterType="Long">
         update web_products_class
         set del_flag = '2'
         where product_class_id = #{productClassId}

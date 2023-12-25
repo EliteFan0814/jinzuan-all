@@ -9,6 +9,14 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item label="类别英文名称" prop="productClassNameEn">
+        <el-input
+          v-model="queryParams.productClassNameEn"
+          placeholder="请输入类别英文名称"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item label="状态" prop="status">
         <el-select v-model="queryParams.status" placeholder="类别状态" clearable>
           <el-option
@@ -57,6 +65,7 @@
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
       <el-table-column prop="productClassName" label="类别名称" width="260"></el-table-column>
+      <el-table-column prop="productClassNameEn" label="类别英文名称" width="260"></el-table-column>
       <el-table-column prop="orderNum" label="排序" width="200"></el-table-column>
       <el-table-column prop="status" label="状态" width="100">
         <template slot-scope="scope">
@@ -96,13 +105,13 @@
       </el-table-column>
     </el-table>
 
-    <!-- 添加或修改部门对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="600px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+    <!-- 添加或修改类别对话框 -->
+    <el-dialog :title="title" :visible.sync="open" width="800px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="110px">
         <el-row>
           <el-col :span="24" v-if="form.parentId !== 0">
-            <el-form-item label="上级部门" prop="parentId">
-              <treeselect v-model="form.parentId" :options="deptOptions" :normalizer="normalizer" placeholder="选择上级部门" />
+            <el-form-item label="上级类别" prop="parentId">
+              <treeselect v-model="form.parentId" :options="deptOptions" :normalizer="normalizer" placeholder="选择上级类别" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -110,6 +119,11 @@
           <el-col :span="12">
             <el-form-item label="类别名称" prop="productClassName">
               <el-input v-model="form.productClassName" placeholder="请输入类别名称" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="类别英文名称" prop="productClassNameEn">
+              <el-input v-model="form.productClassNameEn" placeholder="请输入类别英文名称" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -158,7 +172,7 @@
 </template>
 
 <script>
-import { listDept, getDept, delDept, addDept, updateDept, listDeptExcludeChild } from "@/api/system/web";
+import { listDept, getDept, delDept, addDept, updateDept, listDeptExcludeChild } from "@/api/web/productsClass";
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 
@@ -174,7 +188,7 @@ export default {
       showSearch: true,
       // 表格树数据
       deptList: [],
-      // 部门树选项
+      // 类别树选项
       deptOptions: [],
       // 弹出层标题
       title: "",
@@ -187,6 +201,7 @@ export default {
       // 查询参数
       queryParams: {
         productClassName: undefined,
+        productClassNameEn: undefined,
         status: undefined
       },
       // 表单参数
@@ -194,10 +209,13 @@ export default {
       // 表单校验
       rules: {
         parentId: [
-          { required: true, message: "上级部门不能为空", trigger: "blur" }
+          { required: true, message: "上级类别不能为空", trigger: "blur" }
         ],
         productClassName: [
           { required: true, message: "类别名称不能为空", trigger: "blur" }
+        ],
+        productClassNameEn: [
+          { required: true, message: "类别英文名称不能为空", trigger: "blur" }
         ],
         orderNum: [
           { required: true, message: "显示排序不能为空", trigger: "blur" }
@@ -223,7 +241,7 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询部门列表 */
+    /** 查询类别列表 */
     getList() {
       this.loading = true;
       listDept(this.queryParams).then(response => {
@@ -231,7 +249,7 @@ export default {
         this.loading = false;
       });
     },
-    /** 转换部门数据结构 */
+    /** 转换类别数据结构 */
     normalizer(node) {
       if (node.children && !node.children.length) {
         delete node.children;
@@ -277,7 +295,7 @@ export default {
         this.form.parentId = row.productClassId;
       }
       this.open = true;
-      this.title = "添加部门";
+      this.title = "添加类别";
       listDept().then(response => {
         this.deptOptions = this.handleTree(response.data, "productClassId");
       });
@@ -296,7 +314,7 @@ export default {
       getDept(row.productClassId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改部门";
+        this.title = "修改类别";
         listDeptExcludeChild(row.productClassId).then(response => {
           this.deptOptions = this.handleTree(response.data, "productClassId");
           if (this.deptOptions.length == 0) {
