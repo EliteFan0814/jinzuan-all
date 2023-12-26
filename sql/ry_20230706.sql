@@ -182,6 +182,7 @@ insert into sys_menu values('115',  '表单构建', '3',   '1', 'build',        
 insert into sys_menu values('116',  '代码生成', '3',   '2', 'gen',             'tool/gen/index',           '', 1, 0, 'C', '0', '0', 'tool:gen:list',           'code',          'admin', sysdate(), '', null, '代码生成菜单');
 insert into sys_menu values('117',  '系统接口', '3',   '3', 'swagger',         'tool/swagger/index',       '', 1, 0, 'C', '0', '0', 'tool:swagger:list',       'swagger',       'admin', sysdate(), '', null, '系统接口菜单');
 insert into sys_menu values('118',  '产品分类', '4',   '1', 'productsClass',   'web/productsClass/index',  '', 1, 0, 'C', '0', '0', 'web:productsClass:list',  'tree-table',    'admin', sysdate(), '', null, '产品分类菜单');
+insert into sys_menu values('119',  '产品列表', '4',   '2', 'product',         'web/product/index',        '', 1, 0, 'C', '0', '0', 'web:product:list',        'tree-table',    'admin', sysdate(), '', null, '产品列表菜单');
 -- 三级菜单
 insert into sys_menu values('500',  '操作日志', '108', '1', 'operlog',    'monitor/operlog/index',    '', 1, 0, 'C', '0', '0', 'monitor:operlog:list',    'form',          'admin', sysdate(), '', null, '操作日志菜单');
 insert into sys_menu values('501',  '登录日志', '108', '2', 'logininfor', 'monitor/logininfor/index', '', 1, 0, 'C', '0', '0', 'monitor:logininfor:list', 'logininfor',    'admin', sysdate(), '', null, '登录日志菜单');

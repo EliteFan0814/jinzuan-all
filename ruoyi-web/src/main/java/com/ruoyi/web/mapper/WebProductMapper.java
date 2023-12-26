@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * 产品表 数据层
  * 
- * @author ruoyi
+ * @author fanpeichao
  */
 public interface WebProductMapper
 {
@@ -22,28 +22,19 @@ public interface WebProductMapper
     public List<WebProduct> selectProductList(WebProduct webProduct);
 
     /**
-     * 根据条件分页查询已配产品角色列表
-     * 
-     * @param product 产品信息
-     * @return 产品信息集合信息
-     */
-    public List<WebProduct> selectAllocatedList(WebProduct product);
-
-    /**
-     * 根据条件分页查询未分配产品角色列表
-     * 
-     * @param product 产品信息
-     * @return 产品信息集合信息
-     */
-    public List<WebProduct> selectUnallocatedList(WebProduct product);
-
-    /**
      * 通过产品名查询产品
      * 
      * @param productName 产品名
      * @return 产品对象信息
      */
     public WebProduct selectProductByProductName(String productName);
+    /**
+     * 通过产品英文名查询产品
+     *
+     * @param productNameEn 产品英文名
+     * @return 产品对象信息
+     */
+    public WebProduct selectProductByProductNameEn(String productNameEn);
 
     /**
      * 通过产品ID查询产品
@@ -79,15 +70,6 @@ public interface WebProductMapper
     public int updateProductAvatar(@Param("productName") String productName, @Param("avatar") String avatar);
 
     /**
-     * 重置产品密码
-     * 
-     * @param productName 产品名
-     * @param password 密码
-     * @return 结果
-     */
-    public int resetProductPwd(@Param("productName") String productName, @Param("password") String password);
-
-    /**
      * 通过产品ID删除产品
      * 
      * @param productId 产品ID
@@ -110,20 +92,4 @@ public interface WebProductMapper
      * @return 结果
      */
     public WebProduct checkProductNameUnique(String productName);
-
-    /**
-     * 校验手机号码是否唯一
-     *
-     * @param phonenumber 手机号码
-     * @return 结果
-     */
-    public WebProduct checkPhoneUnique(String phonenumber);
-
-    /**
-     * 校验email是否唯一
-     *
-     * @param email 产品邮箱
-     * @return 结果
-     */
-    public WebProduct checkEmailUnique(String email);
 }
