@@ -38,7 +38,7 @@ public class WebProductsClassController extends BaseController {
     }
 
     /**
-     * 查询产品分类列表（排除节点）
+     * 查询产品分类列表（排除当前产品类节点）
      */
     @PreAuthorize("@ss.hasPermi('web:productsClass:list')")
     @GetMapping("/list/exclude/{productsClassId}")
@@ -104,7 +104,7 @@ public class WebProductsClassController extends BaseController {
             return warn("存在下级产品分类,不允许删除");
         }
         if (productsClassService.checkProductsClassExistProduct(productsClassId)) {
-            return warn("产品分类存在用户,不允许删除");
+            return warn("产品分类存在产品,不允许删除");
         }
         productsClassService.checkProductsClassDataScope(productsClassId);
         return toAjax(productsClassService.deleteProductsClassById(productsClassId));
