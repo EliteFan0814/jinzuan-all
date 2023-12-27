@@ -2,7 +2,7 @@ import request from '@/utils/request'
 import { parseStrEmpty } from "@/utils/ruoyi";
 
 // 查询产品列表
-export function listUser(query) {
+export function listProduct(query) {
   return request({
     url: '/web/product/list',
     method: 'get',
@@ -11,15 +11,15 @@ export function listUser(query) {
 }
 
 // 查询产品详细
-export function getUser(userId) {
+export function getProduct(productId) {
   return request({
-    url: '/web/product/' + parseStrEmpty(userId),
+    url: '/web/product/' + parseStrEmpty(productId),
     method: 'get'
   })
 }
 
 // 新增产品
-export function addUser(data) {
+export function addProduct(data) {
   return request({
     url: '/web/product',
     method: 'post',
@@ -28,7 +28,7 @@ export function addUser(data) {
 }
 
 // 修改产品
-export function updateUser(data) {
+export function updateProduct(data) {
   return request({
     url: '/web/product',
     method: 'put',
@@ -37,17 +37,17 @@ export function updateUser(data) {
 }
 
 // 删除产品
-export function delUser(userId) {
+export function delProduct(productId) {
   return request({
-    url: '/web/product/' + userId,
+    url: '/web/product/' + productId,
     method: 'delete'
   })
 }
 
 // 产品密码重置
-export function resetUserPwd(userId, password) {
+export function resetProductPwd(productId, password) {
   const data = {
-    userId,
+    productId,
     password
   }
   return request({
@@ -58,9 +58,9 @@ export function resetUserPwd(userId, password) {
 }
 
 // 产品状态修改
-export function changeUserStatus(userId, status) {
+export function changeProductStatus(productId, status) {
   const data = {
-    userId,
+    productId,
     status
   }
   return request({
@@ -71,7 +71,7 @@ export function changeUserStatus(userId, status) {
 }
 
 // 查询产品个人信息
-export function getUserProfile() {
+export function getProductProfile() {
   return request({
     url: '/web/product/profile',
     method: 'get'
@@ -79,7 +79,7 @@ export function getUserProfile() {
 }
 
 // 修改产品个人信息
-export function updateUserProfile(data) {
+export function updateProductProfile(data) {
   return request({
     url: '/web/product/profile',
     method: 'put',
@@ -88,7 +88,7 @@ export function updateUserProfile(data) {
 }
 
 // 产品密码重置
-export function updateUserPwd(oldPassword, newPassword) {
+export function updateProductPwd(oldPassword, newPassword) {
   const data = {
     oldPassword,
     newPassword
@@ -110,9 +110,9 @@ export function uploadAvatar(data) {
 }
 
 // 查询授权角色
-export function getAuthRole(userId) {
+export function getAuthRole(productId) {
   return request({
-    url: '/web/product/authRole/' + userId,
+    url: '/web/product/authRole/' + productId,
     method: 'get'
   })
 }
@@ -127,7 +127,7 @@ export function updateAuthRole(data) {
 }
 
 // 查询部门下拉树结构
-export function deptTreeSelect() {
+export function productsClassTreeSelect() {
   return request({
     url: '/web/product/productsClassTree',
     method: 'get'

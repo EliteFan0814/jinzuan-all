@@ -182,7 +182,7 @@ insert into sys_menu values('115',  '表单构建', '3',   '1', 'build',        
 insert into sys_menu values('116',  '代码生成', '3',   '2', 'gen',             'tool/gen/index',           '', 1, 0, 'C', '0', '0', 'tool:gen:list',           'code',          'admin', sysdate(), '', null, '代码生成菜单');
 insert into sys_menu values('117',  '系统接口', '3',   '3', 'swagger',         'tool/swagger/index',       '', 1, 0, 'C', '0', '0', 'tool:swagger:list',       'swagger',       'admin', sysdate(), '', null, '系统接口菜单');
 insert into sys_menu values('118',  '产品分类', '4',   '1', 'productsClass',   'web/productsClass/index',  '', 1, 0, 'C', '0', '0', 'web:productsClass:list',  'tree-table',    'admin', sysdate(), '', null, '产品分类菜单');
-insert into sys_menu values('119',  '产品列表', '4',   '2', 'product',         'web/product/index',        '', 1, 0, 'C', '0', '0', 'web:product:list',        'tree-table',    'admin', sysdate(), '', null, '产品列表菜单');
+insert into sys_menu values('119',  '产品列表', '4',   '2', 'product',         'web/product/index',        '', 1, 0, 'C', '0', '0', 'web:product:list',        'build',         'admin', sysdate(), '', null, '产品列表菜单');
 -- 三级菜单
 insert into sys_menu values('500',  '操作日志', '108', '1', 'operlog',    'monitor/operlog/index',    '', 1, 0, 'C', '0', '0', 'monitor:operlog:list',    'form',          'admin', sysdate(), '', null, '操作日志菜单');
 insert into sys_menu values('501',  '登录日志', '108', '2', 'logininfor', 'monitor/logininfor/index', '', 1, 0, 'C', '0', '0', 'monitor:logininfor:list', 'logininfor',    'admin', sysdate(), '', null, '登录日志菜单');
@@ -260,7 +260,16 @@ insert into sys_menu values('1057', '生成删除', '116', '3', '#', '', '', 1, 
 insert into sys_menu values('1058', '导入代码', '116', '4', '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:import',            '#', 'admin', sysdate(), '', null, '');
 insert into sys_menu values('1059', '预览代码', '116', '5', '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:preview',           '#', 'admin', sysdate(), '', null, '');
 insert into sys_menu values('1060', '生成代码', '116', '6', '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:code',              '#', 'admin', sysdate(), '', null, '');
-
+-- 产品分类按钮
+insert into sys_menu values('1061', '产品分类查询', '118', '1',  '', '', '', 1, 0, 'F', '0', '0', 'web:productsClass:query',          '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu values('1062', '产品分类新增', '118', '2',  '', '', '', 1, 0, 'F', '0', '0', 'web:productsClass:add',            '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu values('1063', '产品分类修改', '118', '3',  '', '', '', 1, 0, 'F', '0', '0', 'web:productsClass:edit',           '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu values('1064', '产品分类删除', '118', '4',  '', '', '', 1, 0, 'F', '0', '0', 'web:productsClass:remove',         '#', 'admin', sysdate(), '', null, '');
+-- 产品列表按钮
+insert into sys_menu values('1065', '产品列表查询', '119', '1',  '', '', '', 1, 0, 'F', '0', '0', 'web:product:query',          '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu values('1066', '产品列表新增', '119', '2',  '', '', '', 1, 0, 'F', '0', '0', 'web:product:add',            '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu values('1067', '产品列表修改', '119', '3',  '', '', '', 1, 0, 'F', '0', '0', 'web:product:edit',           '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu values('1068', '产品列表删除', '119', '4',  '', '', '', 1, 0, 'F', '0', '0', 'web:product:remove',         '#', 'admin', sysdate(), '', null, '');
 
 -- ----------------------------
 -- 6、用户和角色关联表  用户N-1角色

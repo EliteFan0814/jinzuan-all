@@ -60,7 +60,8 @@ public class WebProduct extends BaseEntity {
      * 删除标志（0代表存在 2代表删除）
      */
     private String delFlag;
-
+    /** 产品内容 */
+    private String content;
     /**
      * 产品类对象
      */
@@ -140,7 +141,13 @@ public class WebProduct extends BaseEntity {
         this.delFlag = delFlag;
     }
 
+    public String getContent() {
+        return content;
+    }
 
+    public void setContent(String content) {
+        this.content = content;
+    }
     public WebProductsClass getProductClass() {
         return productClass;
     }

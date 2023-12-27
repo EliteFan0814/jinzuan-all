@@ -94,7 +94,7 @@ public class WebProductController extends BaseController {
     @PostMapping
     public AjaxResult add(@Validated @RequestBody WebProduct webProduct) {
         if (!webProductService.checkProductNameUnique(webProduct)) {
-            return error("新增产品'" + webProduct.getProductName() + "'失败，登录账号已存在");
+            return error("新增产品'" + webProduct.getProductName() + "'失败，产品名称已存在");
         }
         webProduct.setCreateBy(getUsername());
         return toAjax(webProductService.insertProduct(webProduct));
