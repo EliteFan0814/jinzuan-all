@@ -58,20 +58,6 @@
         <if test="status != null and status != ''">
             AND status = #{status}
         </if>
-        <!-- 数据范围过滤 -->
-        ${params.dataScope}
-        order by d.parent_id, d.order_num
-    </select>
-
-    <select id="selectProductsClassListByRoleId" resultType="Long">
-        select d.product_class_id
-        from web_products_class d
-        left join sys_role_dept rd on d.product_class_id = rd.product_class_id
-        where rd.role_id = #{roleId}
-        <if test="deptCheckStrictly">
-            and d.product_class_id not in (select d.parent_id from web_products_class d inner join sys_role_dept rd on d.product_class_id =
-            rd.product_class_id and rd.role_id = #{roleId})
-        </if>
         order by d.parent_id, d.order_num
     </select>
 
@@ -143,6 +129,7 @@
         <if test="productClassId != null and productClassId != 0">#{productClassId},</if>
         <if test="parentId != null and parentId != 0">#{parentId},</if>
         <if test="productClassName != null and productClassName != ''">#{productClassName},</if>
+        <if test="productClassNameEn != null and productClassNameEn != ''">#{productClassNameEn},</if>
         <if test="ancestors != null and ancestors != ''">#{ancestors},</if>
         <if test="orderNum != null">#{orderNum},</if>
         <if test="leader != null and leader != ''">#{leader},</if>

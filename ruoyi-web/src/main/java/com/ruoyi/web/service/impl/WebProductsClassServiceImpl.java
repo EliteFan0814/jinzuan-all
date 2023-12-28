@@ -3,7 +3,6 @@ package com.ruoyi.web.service.impl;
 import com.ruoyi.common.annotation.DataScope;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.TreeSelect;
-import com.ruoyi.common.core.domain.entity.SysRole;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.domain.entity.WebProductsClass;
 import com.ruoyi.common.core.text.Convert;
@@ -12,7 +11,6 @@ import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.spring.SpringUtils;
 import com.ruoyi.web.mapper.WebProductsClassMapper;
-import com.ruoyi.web.mapper.WebProductsClassRoleMapper;
 import com.ruoyi.web.service.IWebProductsClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,9 +29,6 @@ import java.util.stream.Collectors;
 public class WebProductsClassServiceImpl implements IWebProductsClassService {
     @Autowired
     private WebProductsClassMapper productsClassMapper;
-
-    @Autowired
-    private WebProductsClassRoleMapper productsClassRoleMapper;
 
     /**
      * 查询产品类别数据
@@ -92,18 +87,6 @@ public class WebProductsClassServiceImpl implements IWebProductsClassService {
     public List<TreeSelect> buildProductsClassTreeSelect(List<WebProductsClass> productsClasses) {
         List<WebProductsClass> productClassTrees = buildProductsClassTree(productsClasses);
         return productClassTrees.stream().map(TreeSelect::new).collect(Collectors.toList());
-    }
-
-    /**
-     * 根据角色ID查询产品类别树信息
-     *
-     * @param roleId 角色ID
-     * @return 选中产品类别列表
-     */
-    @Override
-    public List<Long> selectProductsClassListByRoleId(Long roleId) {
-        SysRole role = productsClassRoleMapper.selectRoleById(roleId);
-        return productsClassMapper.selectProductsClassListByRoleId(roleId, role.isDeptCheckStrictly());
     }
 
     /**
@@ -196,7 +179,7 @@ public class WebProductsClassServiceImpl implements IWebProductsClassService {
     public int insertProductsClass(WebProductsClass productClass) {
         WebProductsClass info = productsClassMapper.selectProductClassById(productClass.getParentId());
         // 如果父节点不为正常状态,则不允许新增子节点
-        if (!UserConstants.DEPT_NORMAL.equals(info.getStatus())) {
+        if (!UserConstants.PRODUCTS_CLASS_NORMAL.equals(info.getStatus())) {
             throw new ServiceException("产品类别停用，不允许新增");
         }
         productClass.setAncestors(info.getAncestors() + "," + productClass.getParentId());
@@ -220,7 +203,7 @@ public class WebProductsClassServiceImpl implements IWebProductsClassService {
             updateProductsClassChildren(productClass.getProductClassId(), newAncestors, oldAncestors);
         }
         int result = productsClassMapper.updateProductsClass(productClass);
-        if (UserConstants.DEPT_NORMAL.equals(productClass.getStatus()) && StringUtils.isNotEmpty(productClass.getAncestors())
+        if (UserConstants.PRODUCTS_CLASS_NORMAL.equals(productClass.getStatus()) && StringUtils.isNotEmpty(productClass.getAncestors())
                 && !StringUtils.equals("0", productClass.getAncestors())) {
             // 如果该产品类别是启用状态，则启用该产品类别的所有上级产品类别
             updateParentProductsClassStatusNormal(productClass);
@@ -243,8 +226,8 @@ public class WebProductsClassServiceImpl implements IWebProductsClassService {
      * 修改子元素关系
      *
      * @param productClassId       被修改的产品类别ID
-     * @param newAncestors 新的父ID集合
-     * @param oldAncestors 旧的父ID集合
+     * @param newAncestors         新的父ID集合
+     * @param oldAncestors         旧的父ID集合
      */
     public void updateProductsClassChildren(Long productClassId, String newAncestors, String oldAncestors) {
         List<WebProductsClass> children = productsClassMapper.selectChildrenProductClassById(productClassId);
@@ -252,7 +235,7 @@ public class WebProductsClassServiceImpl implements IWebProductsClassService {
             child.setAncestors(child.getAncestors().replaceFirst(oldAncestors, newAncestors));
         }
         if (children.size() > 0) {
-            productsClassMapper.updateProductsClass(children);
+            productsClassMapper.updateProductsClassChildren(children);
         }
     }
 

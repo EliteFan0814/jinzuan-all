@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
 // 查询部门列表
-export function listDept(query) {
+export function listProductsClass(query) {
   return request({
     url: '/web/productsClass/list',
     method: 'get',
@@ -10,23 +10,23 @@ export function listDept(query) {
 }
 
 // 查询部门列表（排除节点）
-export function listDeptExcludeChild(deptId) {
+export function listProductsClassExcludeChild(productsClassId) {
   return request({
-    url: '/web/productsClass/list/exclude/' + deptId,
+    url: '/web/productsClass/list/exclude/' + productsClassId,
     method: 'get'
   })
 }
 
 // 查询部门详细
-export function getDept(deptId) {
+export function getProductsClass(productsClassId) {
   return request({
-    url: '/web/productsClass/' + deptId,
+    url: '/web/productsClass/' + productsClassId,
     method: 'get'
   })
 }
 
 // 新增部门
-export function addDept(data) {
+export function addProductsClass(data) {
   return request({
     url: '/web/productsClass',
     method: 'post',
@@ -35,7 +35,7 @@ export function addDept(data) {
 }
 
 // 修改部门
-export function updateDept(data) {
+export function updateProductsClass(data) {
   return request({
     url: '/web/productsClass',
     method: 'put',
@@ -44,9 +44,9 @@ export function updateDept(data) {
 }
 
 // 删除部门
-export function delDept(deptId) {
+export function delProductsClass(productsClassId) {
   return request({
-    url: '/web/productsClass/' + deptId,
+    url: '/web/productsClass/' + productsClassId,
     method: 'delete'
   })
 }

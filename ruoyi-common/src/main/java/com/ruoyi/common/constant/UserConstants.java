@@ -30,6 +30,12 @@ public class UserConstants
     /** 部门停用状态 */
     public static final String DEPT_DISABLE = "1";
 
+    /** 产品分类正常状态 */
+    public static final String PRODUCTS_CLASS_NORMAL = "0";
+
+    /** 产品分类停用状态 */
+    public static final String PRODUCTS_CLASS_DISABLE = "1";
+
     /** 字典正常状态 */
     public static final String DICT_NORMAL = "0";
 

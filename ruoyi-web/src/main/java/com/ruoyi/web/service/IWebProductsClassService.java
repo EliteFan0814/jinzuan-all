@@ -45,14 +45,6 @@ public interface IWebProductsClassService {
     public List<TreeSelect> buildProductsClassTreeSelect(List<WebProductsClass> productsClasses);
 
     /**
-     * 根据角色ID查询产品类别树信息
-     *
-     * @param roleId 角色ID
-     * @return 选中产品类别列表
-     */
-    public List<Long> selectProductsClassListByRoleId(Long roleId);
-
-    /**
      * 根据产品类别ID查询信息
      *
      * @param productClassId 产品类别ID

@@ -1,6 +1,5 @@
 package com.ruoyi.web.mapper;
 
-import com.ruoyi.common.core.domain.entity.SysDept;
 import com.ruoyi.common.core.domain.entity.WebProductsClass;
 import org.apache.ibatis.annotations.Param;
 
@@ -20,15 +19,6 @@ public interface WebProductsClassMapper
      * @return 产品类别信息集合
      */
     public List<WebProductsClass> selectWebProductsClassList(WebProductsClass productsClass);
-
-    /**
-     * 根据角色ID查询产品类别树信息[暂时不用]
-     * 
-     * @param roleId 角色ID
-     * @param productClassCheckStrictly 产品类别树选择项是否关联显示
-     * @return 选中产品类别列表
-     */
-    public List<Long> selectProductsClassListByRoleId(@Param("roleId") Long roleId, @Param("productClassCheckStrictly") boolean productClassCheckStrictly);
 
     /**
      * 根据产品类别ID查询信息
@@ -108,7 +98,7 @@ public interface WebProductsClassMapper
      * @param productClasses 子元素
      * @return 结果
      */
-    public int updateProductsClass(@Param("productClasses") List<WebProductsClass> productClasses);
+    public int updateProductsClassChildren(@Param("productClasses") List<WebProductsClass> productClasses);
 
     /**
      * 删除产品类别管理信息
