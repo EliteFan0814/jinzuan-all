@@ -1,3 +1,5 @@
+create database if not exists `ry-vue` character set utf8mb4 collate utf8mb4_general_ci;
+use `ry-vue`;
 # SET NAMES 'utf8';
 DROP TABLE IF EXISTS QRTZ_FIRED_TRIGGERS;
 DROP TABLE IF EXISTS QRTZ_PAUSED_TRIGGER_GRPS;
