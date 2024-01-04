@@ -50,6 +50,7 @@ export function logout() {
 // 获取验证码
 export function getCodeImg() {
   return request({
+    // url: 'https://www.jzdia.com/prod-api/captchaImage',
     url: '/captchaImage',
     headers: {
       isToken: false

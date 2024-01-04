@@ -88,7 +88,8 @@ service.interceptors.response.use(res => {
           isRelogin.show = false;
           store.dispatch('LogOut').then(() => {
             // location.href = '/index';
-            this.$router.push('/index')
+            // this.$router.push('/index')
+           location.reload()
           })
       }).catch(() => {
         isRelogin.show = false;

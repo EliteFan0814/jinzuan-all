@@ -4,6 +4,7 @@
       <el-col :sm="24" :lg="24">
         <blockquote class="text-warning" style="font-size: 14px">
           领取阿里云通用云产品1888优惠券
+          <el-button @click="handletest">测试</el-button>
           <br />
           <el-link
             href="https://www.aliyun.com/minisite/goods?userCode=brki8iof"
@@ -952,6 +953,10 @@ export default {
   methods: {
     goTarget(href) {
       window.open(href, "_blank");
+    },
+    handletest() {
+      console.log(process.env.VUE_APP_BASE_API);
+      console.log(process.env.VUE_APP_BASE_ROUTER);
     }
   }
 };
