@@ -23,13 +23,13 @@ public class WebProduct extends BaseEntity {
     /**
      * 产品ID
      */
-    @Excel(name = "产品序号", cellType = ColumnType.NUMERIC, prompt = "产品编号")
+    @Excel(name = "产品ID", cellType = ColumnType.NUMERIC, prompt = "产品ID")
     private Long productId;
 
     /**
      * 产品类ID
      */
-    @Excel(name = "产品类编号", type = Type.IMPORT)
+    @Excel(name = "产品所属类ID", type = Type.IMPORT)
     private Long classId;
 
     /**

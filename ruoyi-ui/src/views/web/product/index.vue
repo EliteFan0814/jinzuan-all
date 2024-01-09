@@ -167,7 +167,7 @@
         >
           <el-table-column type="selection" width="50" align="center" />
           <el-table-column
-            label="产品编号"
+            label="产品ID"
             align="center"
             key="productId"
             prop="productId"
@@ -466,7 +466,7 @@ export default {
       },
       // 列信息
       columns: [
-        { key: 0, label: `产品编号`, visible: true },
+        { key: 0, label: `产品ID`, visible: true },
         { key: 1, label: `产品名称`, visible: true },
         { key: 2, label: `产品英文名称`, visible: true },
         { key: 3, label: `类别`, visible: true },
@@ -671,7 +671,7 @@ export default {
     handleDelete(row) {
       const productIds = row.productId || this.ids;
       this.$modal
-        .confirm('是否确认删除产品编号为"' + productIds + '"的数据项？')
+        .confirm('是否确认删除产品ID为"' + productIds + '"的数据项？')
         .then(function () {
           return delProduct(productIds);
         })

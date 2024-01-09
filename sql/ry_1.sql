@@ -26,16 +26,16 @@ create table sys_dept (
 -- ----------------------------
 -- 初始化-部门表数据
 -- ----------------------------
-insert into sys_dept values(100,  0,   '0',          '若依科技',   0, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '', null);
-insert into sys_dept values(101,  100, '0,100',      '深圳总公司', 1, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '', null);
-insert into sys_dept values(102,  100, '0,100',      '长沙分公司', 2, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '', null);
-insert into sys_dept values(103,  101, '0,100,101',  '研发部门',   1, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '', null);
-insert into sys_dept values(104,  101, '0,100,101',  '市场部门',   2, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '', null);
-insert into sys_dept values(105,  101, '0,100,101',  '测试部门',   3, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '', null);
-insert into sys_dept values(106,  101, '0,100,101',  '财务部门',   4, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '', null);
-insert into sys_dept values(107,  101, '0,100,101',  '运维部门',   5, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '', null);
-insert into sys_dept values(108,  102, '0,100,102',  '市场部门',   1, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '', null);
-insert into sys_dept values(109,  102, '0,100,102',  '财务部门',   2, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '', null);
+insert into sys_dept values(100,  0,   '0',          '金钻科技',   0, '金钻', '15888888888', 'jzdia@qq.com', '0', '0', 'admin', sysdate(), '', null);
+insert into sys_dept values(101,  100, '0,100',      '深圳总公司', 1, '金钻', '15888888888', 'jzdia@qq.com', '0', '0', 'admin', sysdate(), '', null);
+insert into sys_dept values(102,  100, '0,100',      '长沙分公司', 2, '金钻', '15888888888', 'jzdia@qq.com', '0', '0', 'admin', sysdate(), '', null);
+insert into sys_dept values(103,  101, '0,100,101',  '研发部门',   1, '金钻', '15888888888', 'jzdia@qq.com', '0', '0', 'admin', sysdate(), '', null);
+insert into sys_dept values(104,  101, '0,100,101',  '市场部门',   2, '金钻', '15888888888', 'jzdia@qq.com', '0', '0', 'admin', sysdate(), '', null);
+insert into sys_dept values(105,  101, '0,100,101',  '测试部门',   3, '金钻', '15888888888', 'jzdia@qq.com', '0', '0', 'admin', sysdate(), '', null);
+insert into sys_dept values(106,  101, '0,100,101',  '财务部门',   4, '金钻', '15888888888', 'jzdia@qq.com', '0', '0', 'admin', sysdate(), '', null);
+insert into sys_dept values(107,  101, '0,100,101',  '运维部门',   5, '金钻', '15888888888', 'jzdia@qq.com', '0', '0', 'admin', sysdate(), '', null);
+insert into sys_dept values(108,  102, '0,100,102',  '市场部门',   1, '金钻', '15888888888', 'jzdia@qq.com', '0', '0', 'admin', sysdate(), '', null);
+insert into sys_dept values(109,  102, '0,100,102',  '财务部门',   2, '金钻', '15888888888', 'jzdia@qq.com', '0', '0', 'admin', sysdate(), '', null);
 
 
 -- ----------------------------
@@ -68,8 +68,8 @@ create table sys_user (
 -- ----------------------------
 -- 初始化-用户信息表数据
 -- ----------------------------
-insert into sys_user values(1,  103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', sysdate(), 'admin', sysdate(), '', null, '管理员');
-insert into sys_user values(2,  105, 'ry',    '若依', '00', 'ry@qq.com',  '15666666666', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', sysdate(), 'admin', sysdate(), '', null, '测试员');
+insert into sys_user values(1,  103, 'admin', '金钻', '00', 'jzdia@163.com', '15888888888', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', sysdate(), 'admin', sysdate(), '', null, '管理员');
+insert into sys_user values(2,  105, 'jz',    '金钻', '00', 'jzdia@qq.com',  '15666666666', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', sysdate(), 'admin', sysdate(), '', null, '测试员');
 
 
 -- ----------------------------
@@ -163,7 +163,7 @@ create table sys_menu (
 insert into sys_menu values('1', '系统管理', '0', '1', 'system',            null, '', 1, 0, 'M', '0', '0', '', 'system',     'admin', sysdate(), '', null, '系统管理目录');
 insert into sys_menu values('2', '系统监控', '0', '2', 'monitor',           null, '', 1, 0, 'M', '0', '0', '', 'monitor',    'admin', sysdate(), '', null, '系统监控目录');
 insert into sys_menu values('3', '系统工具', '0', '3', 'tool',              null, '', 1, 0, 'M', '0', '0', '', 'tool',       'admin', sysdate(), '', null, '系统工具目录');
-insert into sys_menu values('4', '官网管理', '0', '1', 'web',               null, '', 1, 0, 'M', '0', '0', '', 'guide',      'admin', sysdate(), '', null, '官网管理目录');
+insert into sys_menu values('4', '官网管理', '0', '0', 'web',               null, '', 1, 0, 'M', '0', '0', '', 'guide',      'admin', sysdate(), '', null, '官网管理目录');
 insert into sys_menu values('5', '金钻官网', '0', '5', 'https://jzdia.com', null, '', 0, 0, 'M', '0', '0', '', 'guide',      'admin', sysdate(), '', null, '金钻官网地址');
 -- 二级菜单
 insert into sys_menu values('100',  '用户管理', '1',   '1', 'user',            'system/user/index',        '', 1, 0, 'C', '0', '0', 'system:user:list',        'user',          'admin', sysdate(), '', null, '用户管理菜单');
@@ -273,6 +273,8 @@ insert into sys_menu values('1065', '产品列表查询', '119', '1',  '', '', '
 insert into sys_menu values('1066', '产品列表新增', '119', '2',  '', '', '', 1, 0, 'F', '0', '0', 'web:product:add',            '#', 'admin', sysdate(), '', null, '');
 insert into sys_menu values('1067', '产品列表修改', '119', '3',  '', '', '', 1, 0, 'F', '0', '0', 'web:product:edit',           '#', 'admin', sysdate(), '', null, '');
 insert into sys_menu values('1068', '产品列表删除', '119', '4',  '', '', '', 1, 0, 'F', '0', '0', 'web:product:remove',         '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu values('1069', '产品列表导出', '119', '5',  '', '', '', 1, 0, 'F', '0', '0', 'web:product:export',         '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu values('1070', '产品列表导入', '119', '6',  '', '', '', 1, 0, 'F', '0', '0', 'web:product:import',         '#', 'admin', sysdate(), '', null, '');
 
 -- ----------------------------
 -- 6、用户和角色关联表  用户N-1角色
@@ -650,8 +652,8 @@ create table sys_notice (
 -- ----------------------------
 -- 初始化-公告信息表数据
 -- ----------------------------
-insert into sys_notice values('1', '温馨提醒：2018-07-01 若依新版本发布啦', '2', '新版本内容', '0', 'admin', sysdate(), '', null, '管理员');
-insert into sys_notice values('2', '维护通知：2018-07-01 若依系统凌晨维护', '1', '维护内容',   '0', 'admin', sysdate(), '', null, '管理员');
+insert into sys_notice values('1', '温馨提醒：2018-07-01 金钻新版本发布啦', '2', '新版本内容', '0', 'admin', sysdate(), '', null, '管理员');
+insert into sys_notice values('2', '维护通知：2018-07-01 金钻系统凌晨维护', '1', '维护内容',   '0', 'admin', sysdate(), '', null, '管理员');
 
 
 -- ----------------------------
