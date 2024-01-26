@@ -319,7 +319,10 @@
             <el-form-item label="图片">
               <el-upload
                 class="avatar-uploader"
-                action="https://jsonplaceholder.typicode.com/posts/"
+                v-model:file-list="fileList"
+                action="#"
+                :limit="1"
+                accept="."
                 :show-file-list="false"
                 :on-success="handleAvatarSuccess"
                 :before-upload="beforeAvatarUpload"
@@ -504,6 +507,7 @@ export default {
           { required: true, message: "产品英文名称不能为空", trigger: "blur" },
         ],
       },
+      fileList: [],
     };
   },
   watch: {
