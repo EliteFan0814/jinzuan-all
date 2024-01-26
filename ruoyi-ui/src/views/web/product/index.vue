@@ -242,7 +242,7 @@
                 size="mini"
                 type="text"
                 icon="el-icon-delete"
-                style="color:red;"
+                style="color: red"
                 @click="handleDelete(scope.row)"
                 v-hasPermi="['web:product:remove']"
                 >删除</el-button
@@ -311,6 +311,22 @@
                   >{{ dict.label }}</el-radio
                 >
               </el-radio-group>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="图片">
+              <el-upload
+                class="avatar-uploader"
+                action="https://jsonplaceholder.typicode.com/posts/"
+                :show-file-list="false"
+                :on-success="handleAvatarSuccess"
+                :before-upload="beforeAvatarUpload"
+              >
+                <img v-if="form.avatar" :src="form.avatar" class="avatar" />
+                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+              </el-upload>
             </el-form-item>
           </el-col>
         </el-row>
@@ -563,6 +579,7 @@ export default {
         sex: undefined,
         status: "0",
         remark: undefined,
+        avatar: undefined,
         postIds: [],
         roleIds: [],
       };
@@ -572,6 +589,21 @@ export default {
     handleQuery() {
       this.queryParams.pageNum = 1;
       this.getList();
+    },
+    handleAvatarSuccess(res, file) {
+      this.form.avatar = URL.createObjectURL(file.raw);
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === "image/jpeg";
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isJPG) {
+        this.$message.error("上传头像图片只能是 JPG 格式!");
+      }
+      if (!isLt2M) {
+        this.$message.error("上传头像图片大小不能超过 2MB!");
+      }
+      return isJPG && isLt2M;
     },
     /** 重置按钮操作 */
     resetQuery() {
@@ -729,3 +761,30 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.avatar-uploader {
+  width: 178px;
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  &:hover {
+    border-color: #409eff;
+  }
+}
+
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
+</style>

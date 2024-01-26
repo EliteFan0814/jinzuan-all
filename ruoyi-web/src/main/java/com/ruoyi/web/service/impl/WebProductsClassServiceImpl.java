@@ -37,7 +37,7 @@ public class WebProductsClassServiceImpl implements IWebProductsClassService {
      * @return 产品类别集合
      */
     @Override
-    @DataScope(deptAlias = "d")
+    // @DataScope(deptAlias = "d")
     public List<WebProductsClass> selectWebProductsClassList(WebProductsClass productsClass) {
         return productsClassMapper.selectWebProductsClassList(productsClass);
     }
@@ -50,7 +50,8 @@ public class WebProductsClassServiceImpl implements IWebProductsClassService {
      */
     @Override
     public List<TreeSelect> selectProductsClassTreeList(WebProductsClass productsClass) {
-        List<WebProductsClass> productsClasses = SpringUtils.getAopProxy(this).selectWebProductsClassList(productsClass);
+        // List<WebProductsClass> productsClasses = SpringUtils.getAopProxy(this).selectWebProductsClassList(productsClass);
+        List<WebProductsClass> productsClasses = selectWebProductsClassList(productsClass);
         return buildProductsClassTreeSelect(productsClasses);
     }
 

@@ -39,7 +39,7 @@ public class WebProductServiceImpl implements IWebProductService {
      * @return 产品信息集合信息
      */
     @Override
-    @DataScope(deptAlias = "d", userAlias = "u")
+    // @DataScope(deptAlias = "d", userAlias = "u")
     public List<WebProduct> selectProductList(WebProduct webProduct) {
         return webProductMapper.selectProductList(webProduct);
     }
