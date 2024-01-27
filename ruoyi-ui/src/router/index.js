@@ -178,7 +178,7 @@ Router.prototype.replace = function push(location) {
 
 export default new Router({
   mode: 'history', // 去掉url中的#
-  base: process.env.ROUTER_BASE_URL,
+  base: process.env.VUE_APP_BASE_ROUTER,
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })

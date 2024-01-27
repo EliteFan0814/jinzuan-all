@@ -167,7 +167,7 @@
         >
           <el-table-column type="selection" width="50" align="center" />
           <el-table-column
-            label="产品编号"
+            label="产品ID"
             align="center"
             key="productId"
             prop="productId"
@@ -242,7 +242,7 @@
                 size="mini"
                 type="text"
                 icon="el-icon-delete"
-                style="color:red;"
+                style="color: red"
                 @click="handleDelete(scope.row)"
                 v-hasPermi="['web:product:remove']"
                 >删除</el-button
@@ -311,6 +311,25 @@
                   >{{ dict.label }}</el-radio
                 >
               </el-radio-group>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="图片">
+              <el-upload
+                class="avatar-uploader"
+                v-model:file-list="fileList"
+                action="#"
+                :limit="1"
+                accept="."
+                :show-file-list="false"
+                :on-success="handleAvatarSuccess"
+                :before-upload="beforeAvatarUpload"
+              >
+                <img v-if="form.avatar" :src="form.avatar" class="avatar" />
+                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+              </el-upload>
             </el-form-item>
           </el-col>
         </el-row>
@@ -466,7 +485,7 @@ export default {
       },
       // 列信息
       columns: [
-        { key: 0, label: `产品编号`, visible: true },
+        { key: 0, label: `产品ID`, visible: true },
         { key: 1, label: `产品名称`, visible: true },
         { key: 2, label: `产品英文名称`, visible: true },
         { key: 3, label: `类别`, visible: true },
@@ -488,6 +507,7 @@ export default {
           { required: true, message: "产品英文名称不能为空", trigger: "blur" },
         ],
       },
+      fileList: [],
     };
   },
   watch: {
@@ -563,6 +583,7 @@ export default {
         sex: undefined,
         status: "0",
         remark: undefined,
+        avatar: undefined,
         postIds: [],
         roleIds: [],
       };
@@ -572,6 +593,21 @@ export default {
     handleQuery() {
       this.queryParams.pageNum = 1;
       this.getList();
+    },
+    handleAvatarSuccess(res, file) {
+      this.form.avatar = URL.createObjectURL(file.raw);
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === "image/jpeg";
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isJPG) {
+        this.$message.error("上传头像图片只能是 JPG 格式!");
+      }
+      if (!isLt2M) {
+        this.$message.error("上传头像图片大小不能超过 2MB!");
+      }
+      return isJPG && isLt2M;
     },
     /** 重置按钮操作 */
     resetQuery() {
@@ -671,7 +707,7 @@ export default {
     handleDelete(row) {
       const productIds = row.productId || this.ids;
       this.$modal
-        .confirm('是否确认删除产品编号为"' + productIds + '"的数据项？')
+        .confirm('是否确认删除产品ID为"' + productIds + '"的数据项？')
         .then(function () {
           return delProduct(productIds);
         })
@@ -729,3 +765,30 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.avatar-uploader {
+  width: 178px;
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  &:hover {
+    border-color: #409eff;
+  }
+}
+
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
+</style>

@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.web;
 
+import com.ruoyi.common.annotation.Anonymous;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -146,6 +147,15 @@ public class WebProductController extends BaseController {
     @PreAuthorize("@ss.hasPermi('web:product:list')")
     @GetMapping("/productsClassTree")
     public AjaxResult productsClassTree(WebProductsClass productsClass) {
+        return success(productsClassService.selectProductsClassTreeList(productsClass));
+    }
+
+    /**
+     * 获取部门树列表
+     */
+    @Anonymous
+    @GetMapping("/productsClassTreeWeb")
+    public AjaxResult productsClassTreeWeb(WebProductsClass productsClass) {
         return success(productsClassService.selectProductsClassTreeList(productsClass));
     }
 }
