@@ -41,7 +41,7 @@ create table web_product (
                           class_id          bigint(20)      default null               comment '产品类别ID',
                           product_name      varchar(50)     not null                   comment '产品名称',
                           product_name_en   varchar(100)    default ''                 comment '产品名称英文',
-                          avatar            varchar(100)    default ''                 comment '图片地址',
+                          avatar            varchar(500)    default ''                 comment '图片地址',
                           status            char(1)         default '0'                comment '产品状态（0正常 1停用）',
                           del_flag          char(1)         default '0'                comment '删除标志（0代表存在 2代表删除）',
                           create_by         varchar(64)     default ''                 comment '创建者',

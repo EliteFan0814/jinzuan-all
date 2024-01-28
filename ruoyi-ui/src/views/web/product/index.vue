@@ -318,16 +318,18 @@
           <el-col :span="24">
             <el-form-item label="图片">
               <el-upload
+                v-loading="imageLoading"
                 class="avatar-uploader"
-                v-model:file-list="fileList"
+                :file-list="imgFileList"
                 action="#"
                 :limit="1"
-                accept="."
+                accept="image/jpeg,image/png"
                 :show-file-list="false"
-                :on-success="handleAvatarSuccess"
-                :before-upload="beforeAvatarUpload"
+                :http-request="handleUpImg"
               >
-                <img v-if="form.avatar" :src="form.avatar" class="avatar" />
+                <div v-if="form.avatar" class="img-wrap">
+                  <img :src="form.avatar" class="avatar" />
+                </div>
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </el-upload>
             </el-form-item>
@@ -404,6 +406,7 @@
 
 <script>
 import {
+  upImg,
   listProduct,
   getProduct,
   delProduct,
@@ -425,6 +428,8 @@ export default {
     return {
       // 遮罩层
       loading: true,
+      // 图片上传loading
+      imageLoading: false,
       // 选中数组
       ids: [],
       // 非单个禁用
@@ -507,7 +512,7 @@ export default {
           { required: true, message: "产品英文名称不能为空", trigger: "blur" },
         ],
       },
-      fileList: [],
+      imgFileList: [],
     };
   },
   watch: {
@@ -587,6 +592,7 @@ export default {
         postIds: [],
         roleIds: [],
       };
+      this.imgFileList = []
       this.resetForm("form");
     },
     /** 搜索按钮操作 */
@@ -594,20 +600,34 @@ export default {
       this.queryParams.pageNum = 1;
       this.getList();
     },
-    handleAvatarSuccess(res, file) {
-      this.form.avatar = URL.createObjectURL(file.raw);
-    },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === "image/jpeg";
-      const isLt2M = file.size / 1024 / 1024 < 2;
 
-      if (!isJPG) {
-        this.$message.error("上传头像图片只能是 JPG 格式!");
+    handleUpImg(fileInfo) {
+      this.imgFileList = []
+      const { file } = fileInfo;
+      const fileTypeList = ["image/jpeg", "image/png"];
+      const isJPGPNG = fileTypeList.includes(file.type);
+      const fileSizeLimit = 5;
+      const isLtLimit = file.size / 1024 / 1024 < fileSizeLimit;
+      if (!isJPGPNG) {
+        this.$message.error("上传图片只能是 JPG 或 PNG 格式!");
+        return;
       }
-      if (!isLt2M) {
-        this.$message.error("上传头像图片大小不能超过 2MB!");
+      if (!isLtLimit) {
+        this.$message.error(`上传图片大小不能超过 ${fileSizeLimit}MB!`);
+        return;
       }
-      return isJPG && isLt2M;
+      const formdata = new FormData();
+      formdata.append("file", file);
+      this.imageLoading = true;
+      upImg(formdata)
+        .then((res) => {
+          this.form.avatar = res.url;
+          console.log(res);
+        })
+        .catch((err) => {})
+        .finally(() => {
+          this.imageLoading = false;
+        });
     },
     /** 重置按钮操作 */
     resetQuery() {
@@ -768,6 +788,7 @@ export default {
 <style lang="scss" scoped>
 .avatar-uploader {
   width: 178px;
+  height: 178px;
   border: 1px dashed #d9d9d9;
   border-radius: 6px;
   cursor: pointer;
@@ -775,6 +796,17 @@ export default {
   overflow: hidden;
   &:hover {
     border-color: #409eff;
+  }
+  .img-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 178px;
+    height: 178px;
+  .avatar {
+    max-width: 178px;
+    max-height: 178px;
+  }
   }
 }
 
@@ -786,9 +818,9 @@ export default {
   line-height: 178px;
   text-align: center;
 }
-.avatar {
-  width: 178px;
-  height: 178px;
-  display: block;
-}
+// .avatar {
+//   width: 178px;
+//   height: 178px;
+//   display: block;
+// }
 </style>
