@@ -26,11 +26,11 @@ create table web_products_class (
 -- ----------------------------
 -- 初始化-产品分类表数据
 -- ----------------------------
-insert into web_products_class values(100,  0,   '0',          '产品线',     'products',  0, '叶培举', '15888888888', 'y@qq.com', '0', '0', 'admin', sysdate(), '', null);
-insert into web_products_class values(101,  100, '0,100',      '金属结合剂',  'products',  1, '叶培举', '15888888888', 'y@qq.com', '0', '0', 'admin', sysdate(), '', null);
-insert into web_products_class values(102,  100, '0,100',      '树脂结合剂',  'products',  2, '叶培举', '15888888888', 'y@qq.com', '0', '0', 'admin', sysdate(), '', null);
-insert into web_products_class values(103,  100, '0,100',      '电镀',       'products',  3, '叶培举', '15888888888', 'y@qq.com', '0', '0', 'admin', sysdate(), '', null);
-insert into web_products_class values(104,  100, '0,100',      '陶瓷结合剂',  'products',  4, '叶培举', '15888888888', 'y@qq.com', '0', '0', 'admin', sysdate(), '', null);
+insert into web_products_class values(100,  0,   '0',          '产品线',     'products',  0, '叶培举', '15888888888', 'cartroyal@gmail.com', '0', '0', 'admin', sysdate(), '', null);
+insert into web_products_class values(101,  100, '0,100',      '金属结合剂',  'products',  1, '叶培举', '15888888888', 'cartroyal@gmail.com', '0', '0', 'admin', sysdate(), '', null);
+insert into web_products_class values(102,  100, '0,100',      '树脂结合剂',  'products',  2, '叶培举', '15888888888', 'cartroyal@gmail.com', '0', '0', 'admin', sysdate(), '', null);
+insert into web_products_class values(103,  100, '0,100',      '电镀',       'products',  3, '叶培举', '15888888888', 'cartroyal@gmail.com', '0', '0', 'admin', sysdate(), '', null);
+insert into web_products_class values(104,  100, '0,100',      '陶瓷结合剂',  'products',  4, '叶培举', '15888888888', 'cartroyal@gmail.com', '0', '0', 'admin', sysdate(), '', null);
 
 -- ----------------------------
 -- 2、产品表
@@ -41,7 +41,7 @@ create table web_product (
                           class_id          bigint(20)      default null               comment '产品类别ID',
                           product_name      varchar(50)     not null                   comment '产品名称',
                           product_name_en   varchar(100)    default ''                 comment '产品名称英文',
-                          avatar            varchar(500)    default ''                 comment '图片地址',
+                          avatar            varchar(500)    default ''                 comment '产品图片地址',
                           status            char(1)         default '0'                comment '产品状态（0正常 1停用）',
                           del_flag          char(1)         default '0'                comment '删除标志（0代表存在 2代表删除）',
                           create_by         varchar(64)     default ''                 comment '创建者',
