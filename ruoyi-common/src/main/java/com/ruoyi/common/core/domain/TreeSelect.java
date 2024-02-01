@@ -28,6 +28,11 @@ public class TreeSelect implements Serializable {
     private String label;
 
     /**
+     * 节点英文名称
+     */
+    private String labelEn;
+
+    /**
      * 子节点
      */
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -52,6 +57,7 @@ public class TreeSelect implements Serializable {
     public TreeSelect(WebProductsClass webProductsClass) {
         this.id = webProductsClass.getProductClassId();
         this.label = webProductsClass.getProductClassName();
+        this.labelEn = webProductsClass.getProductClassNameEn();
         this.children = webProductsClass.getChildren().stream().map(TreeSelect::new).collect(Collectors.toList());
     }
 
@@ -67,8 +73,16 @@ public class TreeSelect implements Serializable {
         return label;
     }
 
+    public String getLabelEn() {
+        return labelEn;
+    }
+
     public void setLabel(String label) {
         this.label = label;
+    }
+
+    public void setLabelEn(String labelEn) {
+        this.labelEn = labelEn;
     }
 
     public List<TreeSelect> getChildren() {

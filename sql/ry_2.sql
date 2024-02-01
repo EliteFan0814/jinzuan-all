@@ -26,7 +26,7 @@ create table web_products_class (
 -- ----------------------------
 -- 初始化-产品分类表数据
 -- ----------------------------
-insert into web_products_class values(100,  0,   '0',          '产品线',     'products',  0, '叶培举', '15888888888', 'cartroyal@gmail.com', '0', '0', 'admin', sysdate(), '', null);
+insert into web_products_class values(100,  0,   '0',          '产品分类',    'products',  0, '叶培举', '15888888888', 'cartroyal@gmail.com', '0', '0', 'admin', sysdate(), '', null);
 insert into web_products_class values(101,  100, '0,100',      '金属结合剂',  'products',  1, '叶培举', '15888888888', 'cartroyal@gmail.com', '0', '0', 'admin', sysdate(), '', null);
 insert into web_products_class values(102,  100, '0,100',      '树脂结合剂',  'products',  2, '叶培举', '15888888888', 'cartroyal@gmail.com', '0', '0', 'admin', sysdate(), '', null);
 insert into web_products_class values(103,  100, '0,100',      '电镀',       'products',  3, '叶培举', '15888888888', 'cartroyal@gmail.com', '0', '0', 'admin', sysdate(), '', null);

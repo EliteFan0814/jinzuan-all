@@ -57,7 +57,7 @@ public class OfficeWebProductController extends BaseController {
 
 
     /**
-     * 获取部门树列表
+     * 获取产品类别树列表
      */
     @GetMapping("/productsClassTree")
     public AjaxResult productsClassTree(WebProductsClass productsClass) {
