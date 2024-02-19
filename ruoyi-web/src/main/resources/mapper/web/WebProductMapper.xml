@@ -33,14 +33,43 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
 	<sql id="selectProductVo">
-        select p.product_id,p.class_id, p.product_name, p.product_name_en, p.avatar, p.status, p.del_flag, p.create_by, p.create_time, p.remark,p.content,
-        c.product_class_id, c.parent_id, c.ancestors, c.product_class_name, c.product_class_name_en, c.order_num, c.leader, c.status as product_class_status
+        select p.product_id,
+               p.class_id,
+               p.product_name,
+               p.product_name_en,
+               p.avatar,
+               p.status,
+               p.del_flag,
+               p.create_by,
+               p.create_time,
+               p.remark,
+               p.content,
+               c.product_class_id,
+               c.parent_id,
+               c.ancestors,
+               c.product_class_name,
+               c.product_class_name_en,
+               c.order_num,
+               c.leader,
+               c.status as product_class_status
         from web_product p
 		    left join web_products_class c on p.class_id = c.product_class_id
     </sql>
 
     <select id="selectProductList" parameterType="WebProduct" resultMap="WebProductResult">
-		select u.product_id, u.class_id, u.product_name, u.product_name_en, u.avatar, u.status, u.del_flag, u.create_by, u.create_time, u.remark, d.product_class_name, d.product_class_name_en, d.leader from web_product u
+		select u.product_id,
+		       u.class_id,
+		       u.product_name,
+		       u.product_name_en,
+		       u.avatar,
+		       u.status,
+		       u.del_flag,
+		       u.create_by,
+		       u.create_time,
+		       u.remark,
+		       d.product_class_name,
+		       d.product_class_name_en,
+		       d.leader from web_product u
 		left join web_products_class d on u.class_id = d.product_class_id
 		where u.del_flag = '0'
 		<if test="productId != null and productId != 0">
@@ -61,6 +90,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="classId != null and classId != 0">
 			AND (u.class_id = #{classId} OR u.class_id IN ( SELECT t.product_class_id FROM web_products_class t WHERE find_in_set(#{classId}, ancestors) ))
 		</if>
+		ORDER BY u.product_id DESC
 		<!-- 数据范围过滤 -->
 # 		${params.dataScope}
 	</select>

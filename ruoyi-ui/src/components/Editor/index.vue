@@ -35,7 +35,7 @@ export default {
     /* 高度 */
     height: {
       type: Number,
-      default: null,
+      default: 500,
     },
     /* 最小高度 */
     minHeight: {

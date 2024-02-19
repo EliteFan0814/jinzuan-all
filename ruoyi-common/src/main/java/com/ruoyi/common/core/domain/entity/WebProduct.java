@@ -95,7 +95,7 @@ public class WebProduct extends BaseEntity {
     }
 
     @Xss(message = "产品英文名称不能包含脚本字符")
-    @Size(min = 0, max = 30, message = "产品英文名称长度不能超过30个字符")
+    @Size(min = 0, max = 200, message = "产品英文名称长度不能超过200个字符")
     public String getProductNameEn() {
         return productNameEn;
     }
@@ -106,7 +106,7 @@ public class WebProduct extends BaseEntity {
 
     @Xss(message = "产品名称不能包含脚本字符")
     @NotBlank(message = "产品名称不能为空")
-    @Size(min = 0, max = 30, message = "产品名称长度不能超过30个字符")
+    @Size(min = 0, max = 200, message = "产品名称长度不能超过200个字符")
     public String getProductName() {
         return productName;
     }

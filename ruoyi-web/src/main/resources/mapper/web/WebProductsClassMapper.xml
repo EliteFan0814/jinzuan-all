@@ -10,6 +10,7 @@
         <result property="ancestors" column="ancestors"/>
         <result property="productClassName" column="product_class_name"/>
         <result property="productClassNameEn" column="product_class_name_en"/>
+        <result property="avatar" column="avatar"/>
         <result property="orderNum" column="order_num"/>
         <result property="leader" column="leader"/>
         <result property="phone" column="phone"/>
@@ -29,6 +30,7 @@
                d.ancestors,
                d.product_class_name,
                d.product_class_name_en,
+               d.avatar,
                d.order_num,
                d.leader,
                d.phone,
@@ -67,6 +69,7 @@
                d.ancestors,
                d.product_class_name,
                d.product_class_name_en,
+               d.avatar,
                d.order_num,
                d.leader,
                d.phone,
@@ -117,6 +120,7 @@
         <if test="parentId != null and parentId != 0">parent_id,</if>
         <if test="productClassName != null and productClassName != ''">product_class_name,</if>
         <if test="productClassNameEn != null and productClassNameEn != ''">product_class_name_en,</if>
+        <if test="avatar != null and avatar != ''">avatar,</if>
         <if test="ancestors != null and ancestors != ''">ancestors,</if>
         <if test="orderNum != null">order_num,</if>
         <if test="leader != null and leader != ''">leader,</if>
@@ -130,6 +134,7 @@
         <if test="parentId != null and parentId != 0">#{parentId},</if>
         <if test="productClassName != null and productClassName != ''">#{productClassName},</if>
         <if test="productClassNameEn != null and productClassNameEn != ''">#{productClassNameEn},</if>
+        <if test="avatar != null and avatar != ''">#{avatar},</if>
         <if test="ancestors != null and ancestors != ''">#{ancestors},</if>
         <if test="orderNum != null">#{orderNum},</if>
         <if test="leader != null and leader != ''">#{leader},</if>
@@ -147,6 +152,7 @@
             <if test="parentId != null and parentId != 0">parent_id = #{parentId},</if>
             <if test="productClassName != null and productClassName != ''">product_class_name = #{productClassName},</if>
             <if test="productClassNameEn != null and productClassNameEn != ''">product_class_name_en = #{productClassNameEn},</if>
+            <if test="avatar != null and avatar != ''">avatar = #{avatar},</if>
             <if test="ancestors != null and ancestors != ''">ancestors = #{ancestors},</if>
             <if test="orderNum != null">order_num = #{orderNum},</if>
             <if test="leader != null">leader = #{leader},</if>

@@ -45,6 +45,11 @@ public class WebProductsClass extends BaseEntity {
     private String productClassNameEn;
 
     /**
+     * 产品类图片
+     */
+    private String avatar;
+
+    /**
      * 显示顺序
      */
     private Integer orderNum;
@@ -109,7 +114,7 @@ public class WebProductsClass extends BaseEntity {
     }
 
     @NotBlank(message = "产品类别不能为空")
-    @Size(min = 0, max = 30, message = "产品类别长度不能超过30个字符")
+    @Size(min = 0, max = 200, message = "产品类别长度不能超过200个字符")
     public String getProductClassName() {
         return productClassName;
     }
@@ -119,13 +124,22 @@ public class WebProductsClass extends BaseEntity {
     }
 
     @NotBlank(message = "产品英文类别不能为空")
-    @Size(min = 0, max = 30, message = "产品英文类别长度不能超过30个字符")
+    @Size(min = 0, max = 200, message = "产品英文类别长度不能超过200个字符")
     public String getProductClassNameEn() {
         return productClassNameEn;
     }
 
     public void setProductClassNameEn(String productClassNameEn) {
         this.productClassNameEn = productClassNameEn;
+    }
+
+    @NotBlank(message = "产品类别图片不能为空")
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     @NotNull(message = "显示顺序不能为空")
@@ -204,6 +218,7 @@ public class WebProductsClass extends BaseEntity {
                 .append("ancestors", getAncestors())
                 .append("productClassName", getProductClassName())
                 .append("productClassNameEn", getProductClassNameEn())
+                .append("avatar", getAvatar())
                 .append("orderNum", getOrderNum())
                 .append("leader", getLeader())
                 .append("phone", getPhone())

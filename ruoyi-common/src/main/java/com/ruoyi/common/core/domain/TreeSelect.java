@@ -33,6 +33,16 @@ public class TreeSelect implements Serializable {
     private String labelEn;
 
     /**
+     * 节点图片
+     */
+    private String avatar;
+
+    /**
+     * 节点引导简介
+     */
+    private String leader;
+
+    /**
      * 子节点
      */
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -58,6 +68,8 @@ public class TreeSelect implements Serializable {
         this.id = webProductsClass.getProductClassId();
         this.label = webProductsClass.getProductClassName();
         this.labelEn = webProductsClass.getProductClassNameEn();
+        this.avatar = webProductsClass.getAvatar();
+        this.leader = webProductsClass.getLeader();
         this.children = webProductsClass.getChildren().stream().map(TreeSelect::new).collect(Collectors.toList());
     }
 
@@ -77,6 +89,14 @@ public class TreeSelect implements Serializable {
         return labelEn;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public String getLeader() {
+        return leader;
+    }
+
     public void setLabel(String label) {
         this.label = label;
     }
@@ -84,6 +104,14 @@ public class TreeSelect implements Serializable {
     public void setLabelEn(String labelEn) {
         this.labelEn = labelEn;
     }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+    public void setLeader(String leader) {
+        this.leader = leader;
+    }
+
 
     public List<TreeSelect> getChildren() {
         return children;

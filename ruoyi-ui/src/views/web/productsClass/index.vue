@@ -52,7 +52,7 @@
     </el-form>
 
     <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
+      <!-- <el-col :span="1.5">
         <el-button
           type="primary"
           plain
@@ -62,7 +62,7 @@
           v-hasPermi="['web:productsClass:add']"
           >新增</el-button
         >
-      </el-col>
+      </el-col> -->
       <el-col :span="1.5">
         <el-button
           type="info"
@@ -135,6 +135,7 @@
             >修改</el-button
           >
           <el-button
+            v-if="!scope.row.parentId"
             size="mini"
             type="text"
             icon="el-icon-plus"
@@ -147,7 +148,7 @@
             size="mini"
             type="text"
             icon="el-icon-delete"
-            style="color:red;"
+            style="color: red"
             @click="handleDelete(scope.row)"
             v-hasPermi="['web:productsClass:remove']"
             >删除</el-button
@@ -163,6 +164,7 @@
           <el-col :span="24" v-if="form.parentId !== 0">
             <el-form-item label="上级类别" prop="parentId">
               <treeselect
+                disabled
                 v-model="form.parentId"
                 :options="productsClassOptions"
                 :normalizer="normalizer"
@@ -199,15 +201,39 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
-            <el-form-item label="负责人" prop="leader">
+          <el-col :span="24">
+            <el-form-item label="图片" prop="avatar">
+              <el-upload
+                v-loading="imageLoading"
+                class="avatar-uploader"
+                :file-list="imgFileList"
+                action="#"
+                :limit="1"
+                accept="image/jpeg,image/png"
+                :show-file-list="false"
+                :http-request="handleUpImg"
+              >
+                <div v-if="form.avatar" class="img-wrap">
+                  <img :src="form.avatar" class="avatar" />
+                </div>
+                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+              </el-upload>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="品类介绍" prop="leader">
               <el-input
+                type="textarea"
                 v-model="form.leader"
-                placeholder="请输入负责人"
-                maxlength="20"
+                :rows="2"
+                placeholder="请输入品类介绍"
               />
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="联系电话" prop="phone">
               <el-input
@@ -252,6 +278,7 @@
 
 <script>
 import {
+  upImg,
   listProductsClass,
   getProductsClass,
   delProductsClass,
@@ -270,6 +297,8 @@ export default {
     return {
       // 遮罩层
       loading: true,
+      // 图片上传loading
+      imageLoading: false,
       // 显示搜索条件
       showSearch: true,
       // 表格树数据
@@ -306,6 +335,10 @@ export default {
         orderNum: [
           { required: true, message: "显示排序不能为空", trigger: "blur" },
         ],
+        avatar: [{ required: true, message: "图片不能为空", trigger: "blur" }],
+        leader: [
+          { required: true, message: "品类介绍不能为空", trigger: "blur" },
+        ],
         email: [
           {
             type: "email",
@@ -321,6 +354,7 @@ export default {
           },
         ],
       },
+      imgFileList: [],
     };
   },
   created() {
@@ -365,12 +399,42 @@ export default {
         phone: undefined,
         email: undefined,
         status: "0",
+        avatar: undefined,
       };
       this.resetForm("form");
     },
     /** 搜索按钮操作 */
     handleQuery() {
       this.getList();
+    },
+
+    handleUpImg(fileInfo) {
+      this.imgFileList = [];
+      const { file } = fileInfo;
+      const fileTypeList = ["image/jpeg", "image/png"];
+      const isJPGPNG = fileTypeList.includes(file.type);
+      const fileSizeLimit = 5;
+      const isLtLimit = file.size / 1024 / 1024 < fileSizeLimit;
+      if (!isJPGPNG) {
+        this.$message.error("上传图片只能是 JPG 或 PNG 格式!");
+        return;
+      }
+      if (!isLtLimit) {
+        this.$message.error(`上传图片大小不能超过 ${fileSizeLimit}MB!`);
+        return;
+      }
+      const formdata = new FormData();
+      formdata.append("file", file);
+      this.imageLoading = true;
+      upImg(formdata)
+        .then((res) => {
+          this.form.avatar = res.url;
+          console.log(res);
+        })
+        .catch((err) => {})
+        .finally(() => {
+          this.imageLoading = false;
+        });
     },
     /** 重置按钮操作 */
     resetQuery() {
@@ -459,3 +523,42 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.avatar-uploader {
+  width: 178px;
+  height: 178px;
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  &:hover {
+    border-color: #409eff;
+  }
+  .img-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 178px;
+    height: 178px;
+    .avatar {
+      max-width: 178px;
+      max-height: 178px;
+    }
+  }
+}
+
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+// .avatar {
+//   width: 178px;
+//   height: 178px;
+//   display: block;
+// }
+</style>

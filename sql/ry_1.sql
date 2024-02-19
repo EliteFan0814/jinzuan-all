@@ -186,6 +186,7 @@ insert into sys_menu values('116',  '代码生成', '3',   '2', 'gen',          
 insert into sys_menu values('117',  '系统接口', '3',   '3', 'swagger',         'tool/swagger/index',       '', 1, 0, 'C', '0', '0', 'tool:swagger:list',       'swagger',       'admin', sysdate(), '', null, '系统接口菜单');
 insert into sys_menu values('118',  '产品分类', '4',   '1', 'productsClass',   'web/productsClass/index',  '', 1, 0, 'C', '0', '0', 'web:productsClass:list',  'tree-table',    'admin', sysdate(), '', null, '产品分类菜单');
 insert into sys_menu values('119',  '产品列表', '4',   '2', 'product',         'web/product/index',        '', 1, 0, 'C', '0', '0', 'web:product:list',        'build',         'admin', sysdate(), '', null, '产品列表菜单');
+insert into sys_menu values('120',  '新闻列表', '4',   '3', 'news',            'web/news/index',           '', 1, 0, 'C', '0', '0', 'web:news:list',           'online',        'admin', sysdate(), '', null, '官网新闻菜单');
 -- 三级菜单
 insert into sys_menu values('500',  '操作日志', '108', '1', 'operlog',    'monitor/operlog/index',    '', 1, 0, 'C', '0', '0', 'monitor:operlog:list',    'form',          'admin', sysdate(), '', null, '操作日志菜单');
 insert into sys_menu values('501',  '登录日志', '108', '2', 'logininfor', 'monitor/logininfor/index', '', 1, 0, 'C', '0', '0', 'monitor:logininfor:list', 'logininfor',    'admin', sysdate(), '', null, '登录日志菜单');
@@ -275,7 +276,13 @@ insert into sys_menu values('1067', '产品列表修改', '119', '3',  '', '', '
 insert into sys_menu values('1068', '产品列表删除', '119', '4',  '', '', '', 1, 0, 'F', '0', '0', 'web:product:remove',         '#', 'admin', sysdate(), '', null, '');
 insert into sys_menu values('1069', '产品列表导出', '119', '5',  '', '', '', 1, 0, 'F', '0', '0', 'web:product:export',         '#', 'admin', sysdate(), '', null, '');
 insert into sys_menu values('1070', '产品列表导入', '119', '6',  '', '', '', 1, 0, 'F', '0', '0', 'web:product:import',         '#', 'admin', sysdate(), '', null, '');
-
+-- 官网新闻按钮
+insert into sys_menu values('1071', '官网新闻查询', '120', '1',  '', '', '', 1, 0, 'F', '0', '0', 'web:news:query',          '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu values('1072', '官网新闻新增', '120', '2',  '', '', '', 1, 0, 'F', '0', '0', 'web:news:add',            '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu values('1073', '官网新闻修改', '120', '3',  '', '', '', 1, 0, 'F', '0', '0', 'web:news:edit',           '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu values('1074', '官网新闻删除', '120', '4',  '', '', '', 1, 0, 'F', '0', '0', 'web:news:remove',         '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu values('1075', '官网新闻导出', '120', '5',  '', '', '', 1, 0, 'F', '0', '0', 'web:news:export',         '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu values('1076', '官网新闻导入', '120', '6',  '', '', '', 1, 0, 'F', '0', '0', 'web:news:import',         '#', 'admin', sysdate(), '', null, '');
 -- ----------------------------
 -- 6、用户和角色关联表  用户N-1角色
 -- ----------------------------
