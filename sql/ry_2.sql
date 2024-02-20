@@ -27,11 +27,12 @@ create table web_products_class (
 -- ----------------------------
 -- 初始化-产品分类表数据
 -- ----------------------------
-insert into web_products_class values(100,  0,   '0',          '产品分类',    'products', '', 0, '叶培举', '15888888888', 'cartroyal@gmail.com', '0', '0', 'admin', sysdate(), '', null);
-insert into web_products_class values(101,  100, '0,100',      '金属结合剂',  'products', '', 1, '叶培举', '15888888888', 'cartroyal@gmail.com', '0', '0', 'admin', sysdate(), '', null);
-insert into web_products_class values(102,  100, '0,100',      '树脂结合剂',  'products', '', 2, '叶培举', '15888888888', 'cartroyal@gmail.com', '0', '0', 'admin', sysdate(), '', null);
-insert into web_products_class values(103,  100, '0,100',      '电镀',       'products', '', 3, '叶培举', '15888888888', 'cartroyal@gmail.com', '0', '0', 'admin', sysdate(), '', null);
-insert into web_products_class values(104,  100, '0,100',      '陶瓷结合剂',  'products', '', 4, '叶培举', '15888888888', 'cartroyal@gmail.com', '0', '0', 'admin', sysdate(), '', null);
+insert into web_products_class values(100,  0,   '0',          '产品分类',    'Products',      '', 0, '叶培举', '18117002521', 'cartroyal@gmail.com', '0', '0', 'admin', sysdate(), '', null);
+insert into web_products_class values(101,  100, '0,100',      '金属结合剂',  'Metal Bond',    '', 1, '叶培举', '18117002521', 'cartroyal@gmail.com', '0', '0', 'admin', sysdate(), '', null);
+insert into web_products_class values(102,  100, '0,100',      '树脂结合剂',  'Resin Bond',    '', 2, '叶培举', '18117002521', 'cartroyal@gmail.com', '0', '0', 'admin', sysdate(), '', null);
+insert into web_products_class values(103,  100, '0,100',      '电镀',       'Electroplated', '', 3, '叶培举', '18117002521', 'cartroyal@gmail.com', '0', '0', 'admin', sysdate(), '', null);
+insert into web_products_class values(104,  100, '0,100',      '玻璃纤维',    'Vitrified',     '', 4, '叶培举', '18117002521', 'cartroyal@gmail.com', '0', '0', 'admin', sysdate(), '', null);
+insert into web_products_class values(105,  100, '0,100',      '钎焊',       'Brazed',        '', 5, '叶培举', '18117002521', 'cartroyal@gmail.com', '0', '0', 'admin', sysdate(), '', null);
 
 -- ----------------------------
 -- 2、产品表
@@ -82,4 +83,4 @@ create table web_news (
 -- ----------------------------
 -- 初始化-新闻表数据
 -- ----------------------------
-insert into web_news values(1,  101, '金属结合剂新闻A', '', '0', '0', '叶培举', sysdate(), '叶培举', sysdate(), '', '这是金属结合剂新闻A介绍');
+insert into web_news values(1,  100, '金属结合剂新闻A', '', '0', '0', '叶培举', sysdate(), '叶培举', sysdate(), '', '这是金属结合剂新闻A介绍');
