@@ -276,7 +276,7 @@
               <el-input
                 v-model="form.productName"
                 placeholder="请输入产品名称"
-                maxlength="30"
+                maxlength="200"
               />
             </el-form-item>
           </el-col>
@@ -297,7 +297,7 @@
               <el-input
                 v-model="form.productNameEn"
                 placeholder="请输入英文名称"
-                maxlength="11"
+                maxlength="200" 
               />
             </el-form-item>
           </el-col>
@@ -503,8 +503,8 @@ export default {
           { required: true, message: "产品名称不能为空", trigger: "blur" },
           {
             min: 2,
-            max: 20,
-            message: "产品名称长度必须介于 2 和 20 之间",
+            max: 200,
+            message: "产品名称长度必须介于 2 和 200 之间",
             trigger: "blur",
           },
         ],

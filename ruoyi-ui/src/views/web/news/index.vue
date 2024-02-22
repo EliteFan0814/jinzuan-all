@@ -225,7 +225,7 @@
               <el-input
                 v-model="form.newsName"
                 placeholder="请输入新闻名称"
-                maxlength="30"
+                maxlength="500"
               />
             </el-form-item>
           </el-col>
