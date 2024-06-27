@@ -52,7 +52,7 @@
     </el-form>
 
     <el-row :gutter="10" class="mb8">
-      <!-- <el-col :span="1.5">
+      <el-col :span="1.5">
         <el-button
           type="primary"
           plain
@@ -62,7 +62,7 @@
           v-hasPermi="['web:productsClass:add']"
           >新增</el-button
         >
-      </el-col> -->
+      </el-col>
       <el-col :span="1.5">
         <el-button
           type="info"
@@ -164,7 +164,6 @@
           <el-col :span="24" v-if="form.parentId !== 0">
             <el-form-item label="上级类别" prop="parentId">
               <treeselect
-                disabled
                 v-model="form.parentId"
                 :options="productsClassOptions"
                 :normalizer="normalizer"
