@@ -165,14 +165,14 @@
         where product_class_id = #{productClassId}
     </update>
 
-    <update id="updateProductClassChildren" parameterType="java.util.List">
+    <update id="updateProductsClassChildren" parameterType="java.util.List">
         update web_products_class set ancestors =
-        <foreach collection="depts" item="item" index="index"
+        <foreach collection="productClasses" item="item" index="index"
                  separator=" " open="case product_class_id" close="end">
             when #{item.productClassId} then #{item.ancestors}
         </foreach>
         where product_class_id in
-        <foreach collection="depts" item="item" index="index"
+        <foreach collection="productClasses" item="item" index="index"
                  separator="," open="(" close=")">
             #{item.productClassId}
         </foreach>
